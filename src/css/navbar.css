@@ -1,0 +1,22 @@
+.navbar {
+  background-color: #222;
+  height: 60px;
+}
+
+.navbar-left{
+    display:flex;
+}
+
+.navbar-right{
+  display:flex;
+}
+
+.navbar a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}

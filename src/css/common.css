@@ -1,0 +1,10 @@
+.basic-container-bg {
+  box-shadow: 0 4px 6px #00000080;
+  background-color: rgba(240, 248, 255, 0.925);
+}
+
+.camp-bg {
+  background-image: url("../assets/campingBG.jpg");
+  background-size: 100% 100%;
+  height: calc(100vh - 60px);
+}

@@ -1,0 +1,29 @@
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* push form to top, register text to bottom */
+  width: 600px;
+  min-height: 400px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.login-form-container label {
+  text-align: left;
+}
+
+.login-form-container button {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  margin-top: 30px;
+}
+
+.login-page {
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../assets/loginBG.jpg');
+  background-size: 100% 100%;
+}

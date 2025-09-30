@@ -1,10 +1,22 @@
-.basic-container-bg {
+.basic-container {
   box-shadow: 0 4px 6px #00000080;
   background-color: rgba(240, 248, 255, 0.925);
+  border-radius: 6px;
 }
 
 .camp-bg {
   background-image: url("../assets/campingBG.jpg");
   background-size: 100% 100%;
   height: calc(100vh - 60px);
+}
+
+.inner-container {
+  background-color: rgba(255, 255, 255, 0.925);
+  border-radius: 6px;
+}
+
+.sub-container {
+  box-shadow: 0 2px 3px #00000080;
+  background-color: rgba(204, 231, 255, 0.945);
+  border-radius: 6px;
 }

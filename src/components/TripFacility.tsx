@@ -1,40 +1,32 @@
 import { useState, type JSX } from "react";
 import { FacilityItem } from "./FacilityItem";
 
-interface TripFacilityProps {
-  onNext: () => void;
-}
-
-export const TripFacility = ({ onNext }: TripFacilityProps): JSX.Element => {
+export const TripFacility = (): JSX.Element => {
   const [facilities, setFacilities] = useState<string[]>([]);
-
-  const handleSubmit = () => {
-    onNext();
-  };
 
   const handleSearch = () => {
     setFacilities(mockFacilities);
   };
 
   return (
-    <div className="main camp-bg">
-      <div className="tripDetails rounded-3 basic-container-bg">
-        <div style={{ display: "flex" }}>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter Location"
-          />
-          <button className="btn btn-secondary" onClick={handleSearch}>Search</button>
-        </div>
-        <div className="form-control overflow-auto" style={{ height: 200}}>
-          {facilities.map((facility) => (
-            <FacilityItem key={facility} name={facility} />
-          ))}
-        </div>
-        <button className="btn btn-primary" onClick={handleSubmit}>Next</button>
+    <>
+    <h2 className="text-black">Find a Facility</h2>
+      <div className="d-flex">
+        <input
+          type="text"
+          className="form-control me-2"
+          placeholder="Enter Location"
+        />
+        <button className="btn btn-secondary" onClick={handleSearch}>
+          Search
+        </button>
       </div>
-    </div>
+      <div className="text-black inner-container overflow-auto flex-grow-1 my-2">
+        {facilities.map((facility) => (
+          <FacilityItem key={facility} name={facility} />
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -42,13 +34,13 @@ const mockFacilities: string[] = [
   "Pine Ridge Camp",
   "Willow Creek",
   "Bear Hollow",
-    "Pine Ridge Camp",
-  "Willow Creek",
-  "Bear Hollow",
-    "Pine Ridge Camp",
-  "Willow Creek",
-  "Bear Hollow",
-    "Pine Ridge Camp",
-  "Willow Creek",
-  "Bear Hollow",
+  "Pine Ridge Camp1",
+  "Willow Creek2",
+  "Bear Hollow3",
+  "Pine Ridge Camp4",
+  "Willow Creek5",
+  "Bear Hollow6",
+  "Pine Ridge Camp7",
+  "Willow Creek8",
+  "Bear Hollow9",
 ];

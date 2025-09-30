@@ -1,46 +1,43 @@
 import React, { useState } from "react";
-import { TextInput } from "./textInput.tsx";
-import SubmitButton from "./submitBtn.tsx";
 import "../css/login.css";
 import { createUser } from "../api/users.ts";
 
 export const RegisterForm: React.FC = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); //not actually used just here for decoration
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    createUser({ username: email, password });
-    console.log({ email, password });
+    createUser({ username, password });
+    console.log({ username, password });
   };
 
   return (
-    <div className="login-form-container basic-container-bg">
+    <div className="login-form-container basic-container">
       <form onSubmit={handleSubmit}>
         <h2>Register</h2>
-        <TextInput
-          label="Username"
-          value={email}
-          onChange={setEmail}
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter your username"
+          className="form-control mt-4"
         />
-        <TextInput
-          label="Password"
+        <input
           type="password"
           value={password}
-          onChange={setPassword}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
+          className="form-control mt-3"
         />
-        <TextInput
-          label="Confirm Password"
+        <input
           type="password"
           value={confirmPassword}
-          onChange={setConfirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
+          className="form-control mt-3"
         />
-
-        <SubmitButton label="Register" />
+        <button className="btn btn-primary">Register</button>
       </form>
       <div className="text-center mt-3">
         Already have an account? <a href="/login">Login here</a>

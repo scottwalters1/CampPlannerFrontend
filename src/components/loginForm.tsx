@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { TextInput } from "./textInput.tsx";
-import SubmitButton from "./submitBtn.tsx";
 import "../css/login.css";
 import { login } from "../api/users.ts";
 
@@ -10,28 +8,29 @@ export const LoginForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login({username, password});
+    login({ username, password });
   };
 
   return (
-    <div className="login-form-container basic-container-bg">
+    <div className="login-form-container basic-container">
       <form onSubmit={handleSubmit}>
         <h2>Login</h2>
-        <TextInput
-          label="Username"
+        <input
+          type="text"
           value={username}
-          onChange={setUsername}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter your username"
+          className="form-control mt-3"
         />
-        <TextInput
-          label="Password"
+        <input
           type="password"
           value={password}
-          onChange={setPassword}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
+          className="form-control mt-3"
         />
 
-        <SubmitButton label="Sign In" />
+        <button className="btn btn-primary">Login</button>
       </form>
       <div className="text-center mt-3">
         Not a user? <a href="/register">Register here.</a>

@@ -1,28 +1,38 @@
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
+import { UserItem } from "./UserItem";
 
-interface AddUsersProps {
-  onNext: () => void;
-}
 
-export const AddTripUsers = ({ onNext }: AddUsersProps): JSX.Element => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onNext();
+export const AddTripUsers = (): JSX.Element => {
+  const [invitedUsers, setInvitedUsers] = useState<string[]>([]);
+  const [userToAdd, setUserToAdd] = useState<string>("");
+
+  const inviteUser = () => {
+    if (!userToAdd.trim()) return;
+
+    setInvitedUsers((prev) => [...prev, userToAdd]);
+    setUserToAdd("");
   };
 
   return (
-    <div className="main camp-bg" onSubmit={handleSubmit}>
-      <div className="tripDetails rounded-3 basic-container-bg">
-        <div style={{ display: "flex" }}>
+    <>
+    <h2 className="text-black">Invite Users</h2>
+        <div className="d-flex">
           <input
             type="text"
-            className="form-control"
+            className="form-control me-2"
             placeholder="Add Username"
+            value={userToAdd}
+            onChange={(e) => setUserToAdd(e.target.value)}
           />
-          <button className="btn btn-secondary">Invite</button>
+          <button className="btn btn-secondary" onClick={inviteUser}>
+            Invite
+          </button>
         </div>
-        <button className="btn btn-primary">Finalize Trip</button>
-      </div>
-    </div>
+        <div className="overflow-auto inner-container my-2 rounded-3 flex-grow-1 text-black p-3">
+          {invitedUsers.map((u) => (
+            <UserItem key={u} name={u} />
+          ))}
+        </div>
+      </>
   );
 };

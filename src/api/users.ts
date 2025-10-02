@@ -12,9 +12,6 @@ export const createUser = async (user: User) => {
 
 export const login = async (user: User) =>{
   try{
-    // change this to get url base from env || localhost
-    // PICKUP: keep figuring out how to manage cookies w/protected routes
-    // also maybe figure out how to do npm run dev automatic refreshing on backend
   const res = await fetch("http://localhost:3000/users/login", {
     method: "POST",
     headers: {"Content-Type": "application/json"},

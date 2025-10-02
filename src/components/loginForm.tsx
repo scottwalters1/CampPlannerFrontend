@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import "../css/login.css";
-import { login } from "../api/users.ts";
+import { useAuth } from "../context/AuthContext.tsx";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm: React.FC = () => {
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { user, login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login({ username, password });
+    const user = await login(username, password);
+    console.log(user);
+    if (user) {
+      navigate("/");
+    }
   };
 
   return (

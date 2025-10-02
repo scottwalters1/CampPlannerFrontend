@@ -10,7 +10,7 @@ export const TripFacility = (): JSX.Element => {
 
   return (
     <>
-    <h2 className="text-black">Find a Facility</h2>
+    <h2 className="text-black">Find a Recreational Area</h2>
       <div className="d-flex">
         <input
           type="text"

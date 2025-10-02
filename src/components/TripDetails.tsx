@@ -33,6 +33,12 @@ const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         placeholder="Enter Description Here"
         onChange={handleDescriptionChange}
       />
+      <div className="m-2 d-flex justify-content-evenly">
+        <label className="text-black">Start:</label>
+        <input type="date" />
+        <label className="text-black">End:</label>
+        <input type="date" />
+      </div>
     </div>
   );
 };

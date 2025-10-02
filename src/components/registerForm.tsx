@@ -1,16 +1,27 @@
 import React, { useState } from "react";
 import "../css/login.css";
-import { createUser } from "../api/users.ts";
+import { useAuth } from "../context/AuthContext.tsx";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); //not actually used just here for decoration
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    createUser({ username, password });
-    console.log({ username, password });
+    if (password === confirmPassword) {
+      const message = await register(username, password);
+      console.log(message);
+      if (message) {
+        navigate("/login");
+      }
+    } else {
+      console.error("Passwords don't match!");
+    }
   };
 
   return (

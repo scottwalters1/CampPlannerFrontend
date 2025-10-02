@@ -4,24 +4,24 @@ import NavBar from "./components/navBar.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import { RegisterPage } from "./pages/Register.tsx";
-import { Trip } from "./pages/CreateTrip.tsx";
+import { CreateTrip } from "./pages/CreateTrip.tsx";
 import { ViewTrip } from "./pages/ViewTrips.tsx";
 import './css/common.css'
 
 function App() {
   return (
-    <Router>
+    <>
       <NavBar />
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/trip" element={<Trip />} />
+          <Route path="/trip" element={<CreateTrip />} />
           <Route path="/trips" element={<ViewTrip />} />
         </Routes>
       </main>
-    </Router>
+    </>
   );
 }
 

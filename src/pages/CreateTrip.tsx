@@ -3,13 +3,19 @@ import { TripDetails } from "../components/TripDetails";
 import { TripFacility } from "../components/TripFacility";
 import { AddTripUsers } from "../components/AddTripUsers";
 import { TripActivity } from "../components/TripActivity";
+import type { Trip } from "../models/trip";
 
-export const Trip = (): JSX.Element => {
-  const [tripData, setTripData] = useState(); //TODO: add internal trip state to send to backend on finalize
+export const CreateTrip = (): JSX.Element => {
+  const [tripData, setTripData] = useState<Trip>({} as Trip); //TODO: add internal trip state to send to backend on finalize
   const [step, setStep] = useState(0);
 
+  const updateTripData = (partial: Partial<Trip>) => {
+    setTripData((prev) => ({ ...prev, ...partial }));
+    console.log(partial);
+  };
+
   const steps = [
-    <TripDetails />,
+    <TripDetails onChange={updateTripData} />,
     <TripFacility />,
     <TripActivity />,
     <AddTripUsers />,

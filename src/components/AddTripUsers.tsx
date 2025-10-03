@@ -1,16 +1,27 @@
 import { useState, type JSX } from "react";
 import { UserItem } from "./UserItem";
+import type { Trip } from "../models/trip";
+import type { InvitedUser } from "../models/invitedUser";
 
+interface AddTripUsersProps {
+  onChange: (partial: Partial<Trip>) => void;
+}
 
-export const AddTripUsers = (): JSX.Element => {
-  const [invitedUsers, setInvitedUsers] = useState<string[]>([]);
+export const AddTripUsers = ({ onChange }: AddTripUsersProps): JSX.Element => {
+  const [invitedUsers, setInvitedUsers] = useState<InvitedUser[]>([]);
   const [userToAdd, setUserToAdd] = useState<string>("");
 
   const inviteUser = () => {
-    if (!userToAdd.trim()) return;
+    const trimmed = userToAdd.trim();
+    if (!trimmed || invitedUsers.find(u => u.username === trimmed)) return;
 
-    setInvitedUsers((prev) => [...prev, userToAdd]);
+    const newUser: InvitedUser = { username: trimmed, inviteStatus: "Pending" };
+    const updated = [...invitedUsers, newUser];
+
+    setInvitedUsers(updated);
     setUserToAdd("");
+
+    onChange({ invitedUsers: updated });
   };
 
   return (
@@ -29,8 +40,8 @@ export const AddTripUsers = (): JSX.Element => {
           </button>
         </div>
         <div className="overflow-auto inner-container my-2 rounded-3 flex-grow-1 text-black p-3">
-          {invitedUsers.map((u) => (
-            <UserItem key={u} name={u} />
+          {invitedUsers.map((user) => (
+            <UserItem key={user.username} name={user.username} />
           ))}
         </div>
       </>

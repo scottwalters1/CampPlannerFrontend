@@ -1,22 +1,60 @@
 import { useEffect, useState, type JSX } from "react";
 import { ActivityItem } from "./ActivityItem";
+import type { Trip } from "../models/trip";
+import { apiFetch } from "../api/api";
 
-export const TripActivity = (): JSX.Element => {
+interface TripActivityProps {
+  recAreaId?: number;
+  onChange: (partial: Partial<Trip>) => void;
+}
+
+export const TripActivity = ({
+  recAreaId,
+  onChange,
+}: TripActivityProps): JSX.Element => {
   const [activities, setActivities] = useState<string[]>([]);
+  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
 
   useEffect(() => {
-    setActivities(mockActivities);
-  }, []);
+    if (!recAreaId) return;
+
+    const fetchActivities = async () => {
+      try {
+        const data: { ActivityName: string }[] = await apiFetch(
+          `/ridb/recareas/${recAreaId}/activities`
+        );
+
+        const activityNames = data.map((a) => a.ActivityName);
+        setActivities(activityNames);
+      } catch (err) {
+        console.error("Failed to fetch activities:", err);
+      }
+    };
+
+    fetchActivities();
+  }, [recAreaId]);
+
+  const handleAddActivity = (activity: string) => {
+    if (!selectedActivities.includes(activity)) {
+      const updated = [...selectedActivities, activity];
+      setSelectedActivities(updated);
+      onChange({ tripActivities: updated });
+    }
+  };
 
   return (
-      <>
-         <h2 className="text-black">Select Activities</h2>
-        <div className="text-dark overflow-auto inner-container rounded-3 flex-grow-1 mb-3 p-3">
-          {activities.map((activities) => (
-            <ActivityItem name={activities} key={activities} />
-          ))}
-        </div>
-      </>
+    <>
+      <h2 className="text-black">Select Activities</h2>
+      <div className="text-dark overflow-auto inner-container rounded-3 flex-grow-1 mb-3 p-3">
+        {activities.map((activity) => (
+          <ActivityItem
+            name={activity}
+            key={activity}
+            onClick={() => handleAddActivity(activity)}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 

@@ -6,16 +6,27 @@ interface TripDetailsProps {
 }
 
 export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    onChange({ tripName: value }); 
+  };
 
-const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const value = e.target.value;
-  onChange({ tripName: value }); // use current value
-};
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const value = e.target.value;
+    onChange({ tripDescription: value }); 
+  };
 
-const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  const value = e.target.value;
-  onChange({ tripDescription: value }); // use current value
-};
+  const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value ? new Date(e.target.value) : undefined;
+    if (date) onChange({ startDate: date });
+  };
+
+  const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = e.target.value ? new Date(e.target.value) : undefined;
+    if (date) onChange({ endDate: date });
+  };
 
   return (
     <div className="d-flex flex-column flex-grow-1">
@@ -35,9 +46,9 @@ const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       />
       <div className="m-2 d-flex justify-content-evenly">
         <label className="text-black">Start:</label>
-        <input type="date" />
+        <input type="date" onChange={handleStartDateChange}/>
         <label className="text-black">End:</label>
-        <input type="date" />
+        <input type="date" onChange={handleEndDateChange}/>
       </div>
     </div>
   );

@@ -2,13 +2,18 @@ import type { JSX } from "react";
 
 interface FacilityItemProps {
   name: string;
+  onClick: () => void;
 }
 
-export const FacilityItem = ({ name }: FacilityItemProps): JSX.Element => {
+export const FacilityItem = ({ name, onClick }: FacilityItemProps): JSX.Element => {
   return (
-    <div style={{display:"flex", justifyContent:"space-between"}} className="sub-container m-2 rounded-3 p-2">
-      <h5>{name}</h5>
-      <button className="btn btn-secondary" style={{margin: 5}}>Set</button>
+    <div
+      className="facility-item p-2 border-bottom text-black"
+      role="button"
+      onClick={onClick}
+      style={{ cursor: "pointer" }}
+    >
+      {name}
     </div>
   );
 };

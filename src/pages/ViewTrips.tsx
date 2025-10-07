@@ -31,8 +31,8 @@ const mockTrips: Trip[] = [
     tripName: "Get Out of Town",
     tripDescription:
       "Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure",
-    tripActivites: ["Hiking", "Picnic", "Photography"],
-    recName: "Hikey Hills",
+    tripActivities: ["Hiking", "Picnic", "Photography"],
+    recAreaName: "Hikey Hills",
     recAreaId: 101,
     ownerId: "sa9dasu9021i",
     invitedUsers: [
@@ -41,14 +41,13 @@ const mockTrips: Trip[] = [
     ],
     startDate: new Date("2025-10-10"),
     endDate: new Date("2025-10-12"),
-    isOwner: true,
   },
   {
     tripId: "trip-102",
     tripName: "Beach Weekend",
     tripDescription: "Relax by the sea",
-    tripActivites: ["Swimming", "Surfing", "BBQ"],
-    recName: "Sunny Shores",
+    tripActivities: ["Swimming", "Surfing", "BBQ"],
+    recAreaName: "Sunny Shores",
     recAreaId: 102,
     ownerId: "2131husasda",
     invitedUsers: [
@@ -57,14 +56,13 @@ const mockTrips: Trip[] = [
     ],
     startDate: new Date("2025-11-01"),
     endDate: new Date("2025-11-03"),
-    isOwner: false,
   },
   {
     tripId: "trip-103",
     tripName: "Mountain Retreat",
     tripDescription: "Disconnect and unwind",
-    tripActivites: ["Hiking", "Yoga", "Stargazing"],
-    recName: "Rocky Peaks",
+    tripActivities: ["Hiking", "Yoga", "Stargazing"],
+    recAreaName: "Rocky Peaks",
     recAreaId: 103,
     ownerId: "12391280",
     invitedUsers: [
@@ -73,6 +71,5 @@ const mockTrips: Trip[] = [
     ],
     startDate: new Date("2025-12-05"),
     endDate: new Date("2025-12-10"),
-    isOwner: false,
   },
 ];

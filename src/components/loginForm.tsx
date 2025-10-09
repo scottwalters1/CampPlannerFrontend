@@ -14,7 +14,6 @@ export const LoginForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const user = await login(username, password);
-    console.log(user);
     if (user) {
       navigate("/");
     }

@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
   background-color: #222222;
   height: 60px;
 }
@@ -20,4 +20,51 @@
 
 .navbar a:hover {
   text-decoration: underline;
+} */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 0.5rem 1rem;
+  position: fixed; /* optional: makes navbar stay at top */
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.navbar-left a,
+.navbar-right a {
+  color: white;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  position: relative; /* ensures dropdown is anchored to this area */
+}
+
+.invite-panel {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  width: 280px;
+  max-height: 300px;
+  overflow-y: auto;
+  animation: dropdown 0.2s ease-out;
+}
+
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

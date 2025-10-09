@@ -6,6 +6,7 @@ import { TripActivity } from "../components/TripActivity";
 import type { Trip } from "../models/trip";
 import { apiFetch } from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import { TripCampground } from "../components/CampGround";
 
 export const CreateTrip = (): JSX.Element => {
   const { user } = useAuth();
@@ -20,6 +21,10 @@ export const CreateTrip = (): JSX.Element => {
   const steps = [
     <TripDetails onChange={updateTripData} />,
     <TripFacility onChange={updateTripData} />,
+    <TripCampground
+      recAreaId={tripData.current.recAreaId}
+      onChange={updateTripData}
+    />,
     <TripActivity
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}

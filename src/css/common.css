@@ -1,7 +1,10 @@
 .basic-container {
   box-shadow: 0 4px 6px #00000080;
-  background-color: rgba(240, 248, 255, 0.925);
+  background-color: rgba(227, 243, 255, 0.925);
   border-radius: 6px;
+    overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .camp-bg {
@@ -11,12 +14,18 @@
 }
 
 .inner-container {
-  background-color: rgba(255, 255, 255, 0.925);
+  background-color: #f0f7fdf1;
   border-radius: 6px;
 }
 
 .sub-container {
   box-shadow: 0 2px 3px #00000080;
-  background-color: rgba(204, 231, 255, 0.945);
+  background-color: rgba(204, 231, 255, 0.616);
   border-radius: 6px;
+}
+
+.header-container{
+  background-color: #aed8fdf1;
+  border-radius: 6px;
+  padding: 10px;
 }

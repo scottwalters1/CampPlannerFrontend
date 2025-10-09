@@ -1,9 +1,12 @@
+import type { Activities } from "./activities";
+import type { Campgrounds } from "./campgrounds";
 import type { InvitedUser } from "./invitedUser";
 
 export interface Trip{
     tripName:string;
     tripDescription:string;
-    tripActivities:string[];
+    tripActivities:Activities[];
+    campGrounds:Campgrounds[];
     recAreaName:string;
     recAreaId:number;
     ownerId:string;
@@ -11,5 +14,4 @@ export interface Trip{
     startDate:Date;
     endDate:Date;
     tripId:string;
-
 }

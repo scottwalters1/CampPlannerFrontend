@@ -1,5 +1,5 @@
 import { useState, type JSX } from "react";
-import ViewTripItems from "../components/ViewTripItems";
+import ViewTripItems from "../components/ViewTripComponents/ViewTripItems";
 import type { Trip } from "../models/trip";
 import ViewTripData from "../components/ViewTripComponents/ViewTripData";
 
@@ -12,9 +12,15 @@ export const ViewTrip = (): JSX.Element => {
   return (
     <div
       className="camp-bg"
-      style={{ display: "flex", flexDirection: "row", width: "100%" }}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+      }}
     >
-      <div className="w-100 d-flex mx-auto p-3 me-5 ms-5">
+      <div
+        className="w-75 p-3 d-flex"
+      >
         <ViewTripItems
           trips={mockTrips}
           handleClick={(e) => setSelectedTripId(e)}
@@ -30,8 +36,15 @@ const mockTrips: Trip[] = [
     tripId: "trip-101",
     tripName: "Get Out of Town",
     tripDescription:
-      "Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure Hikey Hills adventure",
-    tripActivities: ["Hiking", "Picnic", "Photography"],
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate, sem nec elementum iaculis, urna risus aliquam magna, sed efficitur magna lectus nec sapien. Sed feugiat viverra ligula, eget porta metus blandit ac. Integer ut eros nec purus iaculis ultricies. Nullam condimentum, tortor nec scelerisque porttitor, nisl massa aliquet eros, a pulvinar lorem nibh vitae enim. Proin consequat nisi et dolor tincidunt porta. Suspendisse potenti. Ut feugiat diam sed magna iaculis, nec interdum est mattis. Vivamus id quam nec metus tincidunt gravida. Mauris pharetra laoreet purus, non tincidunt urna malesuada ac.",
+    tripActivities: [
+      { activityName: "Hiking", dates: [new Date("2025-10-10")] },
+      { activityName: "Picnic", dates: [new Date("2025-10-11")] },
+      { activityName: "Photography", dates: [new Date("2025-10-12")] },
+    ],
+    campGrounds: [
+      { campgroundName: "Hilltop Camp", dates: [new Date("2025-10-10"), new Date("2025-10-12")] },
+    ],
     recAreaName: "Hikey Hills",
     recAreaId: 101,
     ownerId: "sa9dasu9021i",
@@ -46,7 +59,14 @@ const mockTrips: Trip[] = [
     tripId: "trip-102",
     tripName: "Beach Weekend",
     tripDescription: "Relax by the sea",
-    tripActivities: ["Swimming", "Surfing", "BBQ"],
+    tripActivities: [
+      { activityName: "Swimming", dates: [new Date("2025-11-01")] },
+      { activityName: "Surfing", dates: [new Date("2025-11-02")] },
+      { activityName: "BBQ", dates: [new Date("2025-11-03")] },
+    ],
+    campGrounds: [
+      { campgroundName: "Sunny Beachside", dates: [new Date("2025-11-01"), new Date("2025-11-03")] },
+    ],
     recAreaName: "Sunny Shores",
     recAreaId: 102,
     ownerId: "2131husasda",
@@ -61,7 +81,14 @@ const mockTrips: Trip[] = [
     tripId: "trip-103",
     tripName: "Mountain Retreat",
     tripDescription: "Disconnect and unwind",
-    tripActivities: ["Hiking", "Yoga", "Stargazing"],
+    tripActivities: [
+      { activityName: "Hiking", dates: [new Date("2025-12-05")] },
+      { activityName: "Yoga", dates: [new Date("2025-12-07")] },
+      { activityName: "Stargazing", dates: [new Date("2025-12-09")] },
+    ],
+    campGrounds: [
+      { campgroundName: "Rocky Ridge Basecamp", dates: [new Date("2025-12-05"), new Date("2025-12-10")] },
+    ],
     recAreaName: "Rocky Peaks",
     recAreaId: 103,
     ownerId: "12391280",

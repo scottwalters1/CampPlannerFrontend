@@ -6,9 +6,9 @@ interface ViewInvitedUsersProps {
 
 const ViewInvitedUsers = ({ invitedUsers }: ViewInvitedUsersProps) => {
   return (
-    <div className="d-flex flex-column text-center m-4">
-      <h3>Invited Users</h3>
-      <div className="inner-container p-3 flex-grow-1 p-3" style={{width:300}}>
+    <div className="d-flex flex-column text-center m-3 invitedUsers">
+      <h3 className="header-container">Invited Users</h3>
+      <div className="inner-container p-3 flex-grow-1 p-3">
           {invitedUsers.map((user, index) => (
             <div key={index}>
               <h6>

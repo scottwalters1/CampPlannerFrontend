@@ -38,7 +38,13 @@ export const TripActivity = ({
     if (!selectedActivities.includes(activity)) {
       const updated = [...selectedActivities, activity];
       setSelectedActivities(updated);
-      onChange({ tripActivities: updated });
+
+      const tripActivities = updated.map((name) => ({
+        activityName: name,
+        dates: [],
+      }));
+
+      onChange({ tripActivities });
     }
   };
 
@@ -57,5 +63,3 @@ export const TripActivity = ({
     </>
   );
 };
-
-const mockActivities = ["Mountain Biking", "Farming", "Kayaking", "Hiking"];

@@ -3,17 +3,16 @@ import { apiFetch } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 
 interface Invite {
-  id: string;
+  tripId: string;
   tripName: string;
-  inviterName: string;
-  // add other fields you expect
+  ownerName: string;
 }
 
 interface InvitePanelProps {
-  anchorRef: React.RefObject<HTMLElement>;
+  anchorRef: React.RefObject<HTMLElement | null>;
 }
 
-export const InvitePanel: React.FC = ({anchorRef}) => {
+export const InvitePanel: React.FC<InvitePanelProps> = ({anchorRef}) => {
   const [invites, setInvites] = useState<Invite[]>([]);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const { user } = useAuth();
@@ -57,16 +56,16 @@ export const InvitePanel: React.FC = ({anchorRef}) => {
     >
       {user ? (
         <>
-          <h4 className="font-semibold mb-2">Invites for {user.username}</h4>
+          <h4>Invites for {user.username}</h4>
           {invites.length > 0 ? (
             <ul>
               {invites.map((invite) => (
-                <li key={invite.id} className="border-b py-1">
+                <li key={invite.tripId}>
                   <p>{invite.tripName}</p>
-                  <button className="text-green-600 text-sm mr-2">
+                  <button>
                     Accept
                   </button>
-                  <button className="text-red-600 text-sm">Deny</button>
+                  <button>Deny</button>
                 </li>
               ))}
             </ul>

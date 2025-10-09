@@ -3,10 +3,12 @@ import "../css/navbar.css";
 import { FaBell } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { InvitePanel } from "./InvitePanel";
+import { useAuth } from "../context/AuthContext";
 
 function NavBar() {
   const [showInvites, setShowInvites] = useState(false);
   const bellRef = useRef<HTMLButtonElement | null>(null);
+  const { user } = useAuth();
 
   const toggleInvites = () => setShowInvites((prev) => !prev);
 
@@ -20,12 +22,22 @@ function NavBar() {
         </div>
 
         <div className="navbar-right">
-          <div className="relative">
-            <button ref={bellRef} onClick={toggleInvites}>
-              <FaBell className="m-2" size={18} color="white" />
-            </button>
-          </div>
-          <Link to="/login">Login</Link>
+          {user && (
+            <div className="relative">
+              <button ref={bellRef} onClick={toggleInvites}>
+                <FaBell className="m-2" size={18} color="white" />
+              </button>
+            </div>
+          )}
+
+          {user ? (
+            <div>
+              {/* IMPLEMENT LOGOUT FUNCTIONALITY AND CHANGE TO LINK */}
+              <button>Logout - not implemented</button>
+            </div>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </div>
       </nav>
       {showInvites && <InvitePanel anchorRef={bellRef} />}

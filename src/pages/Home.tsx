@@ -2,14 +2,9 @@ import type { JSX } from "react";
 import '../css/home.css';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
 
 const Home = (): JSX.Element => {
   const { user } = useAuth(); 
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <div className="main camp-bg">
@@ -21,8 +16,6 @@ const Home = (): JSX.Element => {
         </h6>
       </div>
       <div>
-        {/* <Link to="/login" className="btn btn-primary m-1">Login</Link>
-        <Link to="/register" className="btn btn-primary m-1">Register</Link> */}
         {user ? (
           <>
             <Link to="/trip" className="btn btn-primary m-1">

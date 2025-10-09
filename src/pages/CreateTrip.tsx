@@ -59,7 +59,7 @@ export const CreateTrip = (): JSX.Element => {
 
   return (
     <div className="main camp-bg">
-      <div className="rounded-3 p-3 d-flex flex-column h-50 w-25 basic-container">
+      <div className="rounded-3 p-3 d-flex flex-column h-75 w-25 basic-container">
         {steps[step]}
         {step === steps.length - 1 ? (
           <button className="btn btn-primary" onClick={postTrip}>

@@ -8,14 +8,14 @@ interface TripDetailsProps {
 export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    onChange({ tripName: value }); 
+    onChange({ tripName: value });
   };
 
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const value = e.target.value;
-    onChange({ tripDescription: value }); 
+    onChange({ tripDescription: value });
   };
 
   const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,11 +44,23 @@ export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
         placeholder="Enter Description Here"
         onChange={handleDescriptionChange}
       />
-      <div className="m-2 d-flex justify-content-evenly">
-        <label className="text-black">Start:</label>
-        <input type="date" onChange={handleStartDateChange}/>
-        <label className="text-black">End:</label>
-        <input type="date" onChange={handleEndDateChange}/>
+      <div className="m-2 d-flex flex-column">
+        <div className="mb-2">
+          <label className="text-black me-2">Start:</label>
+          <input
+            type="date"
+            className="form-control"
+            onChange={handleStartDateChange}
+          />
+        </div>
+        <div>
+          <label className="text-black me-2">End:</label>
+          <input
+            type="date"
+            className="form-control"
+            onChange={handleEndDateChange}
+          />
+        </div>
       </div>
     </div>
   );

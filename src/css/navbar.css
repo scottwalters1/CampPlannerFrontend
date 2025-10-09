@@ -1,34 +1,10 @@
-/* .navbar {
-  background-color: #222222;
-  height: 60px;
-}
-
-.navbar-left{
-    display:flex;
-}
-
-.navbar-right{
-  display:flex;
-  align-items: center;
-}
-
-.navbar a {
-  color: white;
-  margin-right: 1rem;
-  text-decoration: none;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-} */
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #222;
   padding: 0.5rem 1rem;
-  position: fixed; /* optional: makes navbar stay at top */
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
@@ -44,7 +20,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
-  position: relative; /* ensures dropdown is anchored to this area */
+  position: relative; 
 }
 
 .invite-panel {

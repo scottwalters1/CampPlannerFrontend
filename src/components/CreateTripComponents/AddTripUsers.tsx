@@ -1,8 +1,8 @@
 import { useState, type JSX } from "react";
-import { UserItem } from "./UserItem";
-import type { Trip } from "../models/trip";
-import type { InvitedUser } from "../models/invitedUser";
-import { apiFetch } from "../api/api";
+import { UserItem } from "../Items/UserItem";
+import type { Trip } from "../../models/trip";
+import type { InvitedUser } from "../../models/invitedUser";
+import { apiFetch } from "../../api/api";
 
 interface AddTripUsersProps {
   onChange: (partial: Partial<Trip>) => void;

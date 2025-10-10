@@ -49,8 +49,8 @@ const mockTrips: Trip[] = [
     recAreaId: 101,
     ownerId: "sa9dasu9021i",
     invitedUsers: [
-      { username: "Alice", inviteStatus: "Accepted" },
-      { username: "Bob", inviteStatus: "Pending" },
+      { username: "Alice",userID:"", inviteStatus: "Accepted" },
+      { username: "Bob", userID:"", inviteStatus: "Pending" },
     ],
     startDate: new Date("2025-10-10"),
     endDate: new Date("2025-10-12"),
@@ -71,8 +71,8 @@ const mockTrips: Trip[] = [
     recAreaId: 102,
     ownerId: "2131husasda",
     invitedUsers: [
-      { username: "Charlie", inviteStatus: "Denied" },
-      { username: "Dana", inviteStatus: "Accepted" },
+      { username: "Charlie", userID:"", inviteStatus: "Denied" },
+      { username: "Dana", userID:"", inviteStatus: "Accepted" },
     ],
     startDate: new Date("2025-11-01"),
     endDate: new Date("2025-11-03"),
@@ -93,8 +93,8 @@ const mockTrips: Trip[] = [
     recAreaId: 103,
     ownerId: "12391280",
     invitedUsers: [
-      { username: "Eve", inviteStatus: "Pending" },
-      { username: "Frank", inviteStatus: "Accepted" },
+      { username: "Eve", userID:"", inviteStatus: "Pending" },
+      { username: "Frank", userID:"", inviteStatus: "Accepted" },
     ],
     startDate: new Date("2025-12-05"),
     endDate: new Date("2025-12-10"),

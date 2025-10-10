@@ -1,4 +1,4 @@
-import Calendar from "react-calendar";
+import { DayPicker } from "react-day-picker";
 
 interface TripDetailsProps {
   tripName: string;
@@ -7,7 +7,7 @@ interface TripDetailsProps {
   startDate: Date;
   endDate: Date;
   onChange: (date: Date) => void;
-  selectedDate: Date | null;
+  selectedDate: Date | undefined;
 }
 
 const ViewTripDetails = ({
@@ -22,19 +22,24 @@ const ViewTripDetails = ({
   return (
     <div className="d-flex flex-column text-center m-3 details">
       <h3 className="header-container">{tripName}</h3>
-      <div className="inner-container text-start p-3 flex-grow-1 mb-3">
+      <div className="inner-container text-start flex-grow-1 mb-3">
         <h6>
-          <strong><em>{recName}</em></strong>: {tripDescription}
+          <strong>
+            <em>{recName}</em>
+          </strong>
+          : {tripDescription}
         </h6>
       </div>
       <h3 className="header-container">Camping Trip Dates</h3>
-      <div className="inner-container p-3">
-        <Calendar
-          minDate={startDate}
-          maxDate={endDate}
-          activeStartDate={startDate}
-          onChange={(d) => onChange(d as Date)}
-          value={selectedDate}
+      <div className="inner-container" style={{ alignItems: "center" }}>
+        <DayPicker
+          mode="single"
+          onSelect={(d) => onChange(d as Date)}
+          selected={selectedDate}
+          animate
+          navLayout="around"
+          month={startDate}
+          disabled={{ before: startDate, after: endDate }}
         />
       </div>
       <p className="inner-container mt-2">

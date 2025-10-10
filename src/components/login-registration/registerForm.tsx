@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../css/login.css";
-import { useAuth } from "../context/AuthContext.tsx";
+import "../../css/login.css";
+import { useAuth } from "../../context/AuthContext.tsx";
 import { useNavigate } from "react-router-dom";
 
 export const RegisterForm: React.FC = () => {

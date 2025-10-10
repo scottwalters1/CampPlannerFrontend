@@ -16,6 +16,9 @@
 .inner-container {
   background-color: #f0f7fdf1;
   border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sub-container {
@@ -29,3 +32,26 @@
   border-radius: 6px;
   padding: 10px;
 }
+
+.custom-btn {
+  background-color: #ffffff; 
+  border: 1px solid #d2dae9; 
+  border-radius: 0.5rem; 
+  font-weight: 500; 
+  font-size: 0.875rem; 
+  padding: 0.625rem 1.25rem; 
+  text-align: center;
+  margin-right: 0.5rem; 
+  margin-bottom: 0.5rem; 
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-btn:hover {
+  background-color: #f3f4f6; 
+}
+
+.custom-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #d4f3ff; 
+}
+

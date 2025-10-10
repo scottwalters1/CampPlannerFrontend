@@ -1,12 +1,12 @@
 import { useRef, useState, type JSX } from "react";
-import { TripDetails } from "../components/TripDetails";
-import { TripFacility } from "../components/TripFacility";
-import { AddTripUsers } from "../components/AddTripUsers";
-import { TripActivity } from "../components/TripActivity";
+import { TripDetails } from "../components/CreateTripComponents/TripDetails";
+import { TripFacility } from "../components/CreateTripComponents/TripFacility";
+import { AddTripUsers } from "../components/CreateTripComponents/AddTripUsers";
+import { TripActivity } from "../components/CreateTripComponents/TripActivity";
 import type { Trip } from "../models/trip";
 import { apiFetch } from "../api/api";
 import { useAuth } from "../context/AuthContext";
-import { TripCampground } from "../components/CampGround";
+import { TripCampground } from "../components/CreateTripComponents/CampGround";
 
 export const CreateTrip = (): JSX.Element => {
   const { user } = useAuth();
@@ -24,10 +24,14 @@ export const CreateTrip = (): JSX.Element => {
     <TripCampground
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}
+      startDate={tripData.current.startDate}
+      endDate={tripData.current.endDate}
     />,
     <TripActivity
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}
+      startDate={tripData.current.startDate}
+      endDate={tripData.current.endDate}
     />,
     <AddTripUsers onChange={updateTripData} />,
   ];
@@ -59,7 +63,7 @@ export const CreateTrip = (): JSX.Element => {
 
   return (
     <div className="main camp-bg">
-      <div className="rounded-3 p-3 d-flex flex-column h-50 w-25 basic-container">
+      <div className="rounded-3 p-3 d-flex flex-column h-75 w-25 basic-container">
         {steps[step]}
         {step === steps.length - 1 ? (
           <button className="btn btn-primary" onClick={postTrip}>

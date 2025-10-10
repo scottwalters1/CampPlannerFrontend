@@ -1,5 +1,5 @@
 import React from "react";
-import { RegisterForm } from "../components/registerForm";
+import { RegisterForm } from "../components/login-registration/registerForm";
 import "../css/login.css";
 
 export const RegisterPage: React.FC = () => (

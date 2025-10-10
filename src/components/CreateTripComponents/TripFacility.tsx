@@ -1,7 +1,7 @@
 import { useState, type JSX } from "react";
-import { FacilityItem } from "./FacilityItem";
-import { apiFetch } from "../api/api";
-import type { Trip } from "../models/trip";
+import { FacilityItem } from "../Items/FacilityItem";
+import { apiFetch } from "../../api/api";
+import type { Trip } from "../../models/trip";
 
 interface TripFacilityProps {
   onChange: (data: Partial<Trip>) => void;
@@ -13,11 +13,12 @@ export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
     { RecAreaName: string; RecAreaID: string }[]
   >([]);
   const [query, setQuery] = useState("");
-    const [selectedFacility, setSelectedFacility] = useState<{ RecAreaName: string; RecAreaID: string } | null>(null);
+  const [selectedFacility, setSelectedFacility] = useState<{
+    RecAreaName: string;
+    RecAreaID: string;
+  } | null>(null);
 
   const handleSearch = async () => {
-    // setFacilities(mockFacilities);
-
     if (!query.trim()) return;
     try {
       const data = await apiFetch(
@@ -44,7 +45,7 @@ export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
 
   return (
     <>
-      <h2 className="text-black">Find a Recreational Area</h2>
+      <h2 className="text-black header-container">Find a Recreational Area</h2>
       <div className="d-flex">
         <input
           type="text"
@@ -61,30 +62,16 @@ export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
         {facilities.map((facility) => {
           const isSelected = selectedFacility?.RecAreaID === facility.RecAreaID;
           return (
-            <FacilityItem
-            key={facility.RecAreaID}
-            name={facility.RecAreaName}
-            onClick={() => handleSelect(facility)}
-          />);
+            <button
+              key={facility.RecAreaID}
+              onClick={() => handleSelect(facility)}
+              className="custom-btn"
+            >
+              {facility.RecAreaName}
+            </button>
+          );
         })}
       </div>
     </>
   );
 };
-
-
-
-const mockFacilities: string[] = [
-  "Pine Ridge Camp",
-  "Willow Creek",
-  "Bear Hollow",
-  "Pine Ridge Camp1",
-  "Willow Creek2",
-  "Bear Hollow3",
-  "Pine Ridge Camp4",
-  "Willow Creek5",
-  "Bear Hollow6",
-  "Pine Ridge Camp7",
-  "Willow Creek8",
-  "Bear Hollow9",
-];

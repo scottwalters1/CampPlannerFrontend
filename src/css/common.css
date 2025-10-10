@@ -10,7 +10,7 @@
 .camp-bg {
   background-image: url("../assets/campingBG.jpg");
   background-size: 100% 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh);
 }
 
 .inner-container {

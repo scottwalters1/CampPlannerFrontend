@@ -1,5 +1,5 @@
 import { useState, type JSX } from "react";
-import ViewTripItems from "../components/ViewTripComponents/ViewTripItems";
+import ViewTripItems from "../components/Items/ViewTripItems";
 import type { Trip } from "../models/trip";
 import ViewTripData from "../components/ViewTripComponents/ViewTripData";
 

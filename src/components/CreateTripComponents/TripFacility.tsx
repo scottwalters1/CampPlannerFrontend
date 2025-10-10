@@ -1,5 +1,4 @@
 import { useState, type JSX } from "react";
-import { FacilityItem } from "../Items/FacilityItem";
 import { apiFetch } from "../../api/api";
 import type { Trip } from "../../models/trip";
 

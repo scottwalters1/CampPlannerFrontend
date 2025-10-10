@@ -1,8 +1,7 @@
 import { useEffect, useState, type JSX } from "react";
-import { ActivityItem } from "../Items/ActivityItem";
 import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
-import { DayPicker, Dropdown } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
 interface TripCampGroundsProps {

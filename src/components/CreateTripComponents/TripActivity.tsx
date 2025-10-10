@@ -1,5 +1,4 @@
 import { useEffect, useState, type JSX } from "react";
-import { ActivityItem } from "../Items/ActivityItem";
 import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
 import { DayPicker } from "react-day-picker";

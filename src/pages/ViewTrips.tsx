@@ -2,13 +2,35 @@ import { useState, type JSX } from "react";
 import ViewTripItems from "../components/Items/ViewTripItems";
 import type { Trip } from "../models/trip";
 import ViewTripData from "../components/ViewTripComponents/ViewTripData";
+import { useEffect } from "react";
+import { apiFetch } from "../api/api";
 
 export const ViewTrip = (): JSX.Element => {
   const [selectedTripId, setSelectedTripId] = useState<string>(
     mockTrips[0].tripId
   );
 
+  const [trips, setTrips] = useState<Trip>({} as Trip);
+
+/*    useEffect(() => {
+      const fetchMyTrips = async () => {
+        try {
+          const data: { FacilityName: string }[] = await apiFetch(
+            `/trips/user/${"put username in here?"}`
+          );
+  
+          const tripsData = data.map((a: any) => a.FacilityName);
+          setTrips(tripsData);
+        } catch (err) {
+          console.error("Failed to fetch trips:", err);
+        }
+      };
+  
+      fetchMyTrips();
+    }, []);  */
+
   const selectedTrip = mockTrips.find((t) => t.tripId === selectedTripId);
+
   return (
     <div
       className="camp-bg"
@@ -16,10 +38,12 @@ export const ViewTrip = (): JSX.Element => {
         display: "flex",
         justifyContent: "center",
         width: "100%",
+        alignItems:"center",
       }}
     >
       <div
         className="w-75 p-3 d-flex"
+        style={{height:"90%"}}
       >
         <ViewTripItems
           trips={mockTrips}

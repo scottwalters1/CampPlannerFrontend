@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState } from "react";
 import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
 import { DayPicker } from "react-day-picker";
@@ -15,10 +15,14 @@ export const TripActivity = ({
   onChange,
   startDate,
   endDate,
-}: TripActivityProps): JSX.Element => {
+}: TripActivityProps) => {
   const [activities, setActivities] = useState<string[]>([]);
-  const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [selectedActivities, setSelectedActivities] = useState<
+    { name: string; dates: Date[] }[]
+  >([]);
+  const [activeActivity, selectedActiveActivity] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     if (!recAreaId) return;
@@ -39,41 +43,76 @@ export const TripActivity = ({
   }, [recAreaId]);
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDates((prev) => {
-      const exists = prev.some((d) => d.toDateString() === date.toDateString());
-      const updated = exists
-        ? prev.filter((d) => d.toDateString() !== date.toDateString())
-        : [...prev, date];
-      return updated;
+    if (!activeActivity) return; // cant pick new dates if no activity.
+    let updated;
+    setSelectedActivities((prev) => {
+        const activitywithDates = prev.find((p) => p.name === activeActivity)!;
+
+      if (!activitywithDates) {
+        //Add the activity to the list with the new date
+        updated = [...prev, { name: activeActivity, dates: [date] }];
+        return updated;
+      } else {
+        //activity already exists update calendar
+
+        const dateExists = activitywithDates.dates.some(
+          (d) => d.toDateString() === date.toDateString()
+        );
+
+        const updatedDates = dateExists
+          ? activitywithDates?.dates.filter(
+              (d) => d.toDateString() !== date.toDateString()
+            )
+          : [...activitywithDates.dates, date];
+
+        const updated = prev.map((p) => {
+          if (p.name === activeActivity) {
+            return { name: activeActivity, dates: updatedDates };
+          } else {
+            return p;
+          }
+        });
+
+        onChange({
+          tripActivities: updated.map((a) => ({
+            activityName: a.name,
+            dates: a.dates,
+          })),
+        });
+
+        return updated;
+      }
     });
   };
 
-  const handleAddActivity = (activity: string) => {
-    if (!selectedDates) return;
-    if (!selectedActivities.includes(activity)) {
-      const updated = [...selectedActivities, activity];
-      setSelectedActivities(updated);
-
-      const tripActivities = updated.map((name) => ({
-        activityName: name,
-        dates: selectedDates,
-      }));
-
-      onChange({ tripActivities });
-    }
+  const getActiveActivityDates = (): Date[] => {
+    if (!activeActivity) return [];
+    const activity = selectedActivities.find((a) => a.name === activeActivity);
+    return activity ? activity.dates : [];
   };
+
+  function findActivityDates(name: string): Date[] {
+    const campground = selectedActivities.find((a) => a.name === name);
+    return campground ? campground.dates : [];
+  }
 
   return (
     <>
-      <h2 className="text-black header-container">Select Activities</h2>
+      <h2 className="text-black header-container">Set Activities & Dates</h2>
       <div className="text-dark overflow-auto inner-container rounded-3 flex-grow-1 mb-2">
         {activities.map((activity) => (
           <button
             key={activity}
-            onClick={() => handleAddActivity(activity)}
+            onClick={() => selectedActiveActivity(activity)}
             className="custom-btn"
           >
             {activity}
+            <br />
+            <small>
+              {findActivityDates(activity)
+                .map((d) => d.toLocaleDateString())
+                .join(", ")}
+            </small>
           </button>
         ))}
       </div>
@@ -82,13 +121,16 @@ export const TripActivity = ({
         style={{ alignItems: "center" }}
       >
         <DayPicker
+          key={activeActivity}
           mode="multiple"
           animate
           navLayout="around"
           month={startDate}
-          disabled={{ before: startDate, after: endDate }}
+          disabled={(date) =>
+            !activeActivity || date < startDate || date > endDate
+          }
           onDayClick={handleDateSelect}
-          selected={selectedDates}
+          selected={getActiveActivityDates()}
         />
       </div>
     </>

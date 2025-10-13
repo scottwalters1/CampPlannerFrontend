@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState } from "react";
 import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
 import { DayPicker } from "react-day-picker";
@@ -16,10 +16,12 @@ export const TripCampground = ({
   onChange,
   startDate,
   endDate,
-}: TripCampGroundsProps): JSX.Element => {
-  const [campGrounds, setCampgrounds] = useState<string[]>([]);
-  const [selectedCampGrounds, setSelectedCampGrounds] = useState<string[]>([]);
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+}: TripCampGroundsProps) => {
+  const [campgrounds, setCampgrounds] = useState<string[]>([]);
+  const [selectedCampGrounds, setSelectedCampGrounds] = useState<
+    { name: string; dates: Date[] }[]
+  >([]);
+  const [activeCampground, setActiveCampground] = useState<string | null>(null);
 
   useEffect(() => {
     if (!recAreaId) return;
@@ -41,40 +43,84 @@ export const TripCampground = ({
   }, [recAreaId]);
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDates((prev) => {
-      const exists = prev.some((d) => d.toDateString() === date.toDateString());
-      const updated = exists
-        ? prev.filter((d) => d.toDateString() !== date.toDateString())
-        : [...prev, date];
-      return updated;
+    if (!activeCampground) return; // can't pick new dates if no campground
+
+    setSelectedCampGrounds((prev) => {
+      const campgroundWithDates = prev.find(
+        (c) => c.name === activeCampground
+      )!;
+
+      if (!campgroundWithDates) {
+        // Add new campground with this date
+        const updated = [...prev, { name: activeCampground, dates: [date] }];
+        onChange({
+          campGrounds: updated.map((c) => ({
+            campgroundName: c.name,
+            dates: c.dates,
+          })),
+        });
+        return updated;
+      } else {
+        const dateExists = campgroundWithDates.dates.some(
+          (d) => d.toDateString() === date.toDateString()
+        );
+
+        const updatedDates = dateExists
+          ? campgroundWithDates.dates.filter(
+              (d) => d.toDateString() !== date.toDateString()
+            )
+          : [...campgroundWithDates.dates, date];
+
+        const updated = prev.map((c) =>
+          c.name === activeCampground
+            ? { name: activeCampground, dates: updatedDates }
+            : c
+        );
+
+        onChange({
+          campGrounds: updated.map((c) => ({
+            campgroundName: c.name,
+            dates: c.dates,
+          })),
+        });
+
+        return updated;
+      }
     });
   };
 
-  const handleAddCampgrounds = (campground: string) => {
-    if (!selectedCampGrounds.includes(campground)) {
-      const updated = [...selectedCampGrounds, campground];
-      setSelectedCampGrounds(updated);
+  const getActiveCampgroundDates = (): Date[] => {
+    if (!activeCampground) return [];
+    const campground = selectedCampGrounds.find(
+      (c) => c.name === activeCampground
+    );
+    return campground ? campground.dates : [];
+  };
 
-      const campGrounds = updated.map((name) => ({
-        campgroundName: name,
-        dates: selectedDates,
-      }));
-
-      onChange({ campGrounds });
-    }
+  const getCampgroundDates = (name: string): Date[] => {
+    const campground = selectedCampGrounds.find((c) => c.name === name);
+    return campground ? campground.dates : [];
   };
 
   return (
     <>
-      <h2 className="text-black header-container">Select Campgrounds</h2>
+      <h2 className="text-black header-container">Set Campground & Dates</h2>
       <div className="text-dark overflow-auto inner-container rounded-3 flex-grow-1 mb-2">
-        {campGrounds.map((campground, index) => (
+        {campgrounds.map((campground, index) => (
           <button
             key={index}
-            onClick={() => handleAddCampgrounds(campground)}
-            className="custom-btn"
+            onClick={() => setActiveCampground(campground)}
+            className={`custom-btn ${
+              activeCampground === campground ? "active" : ""
+            }`}
           >
             {campground}
+            <br />
+            <small>
+              {getCampgroundDates(campground)
+                .map((d) => d.toLocaleDateString())
+                .join(", ")}
+            </small>
           </button>
         ))}
       </div>
@@ -83,13 +129,16 @@ export const TripCampground = ({
         style={{ alignItems: "center" }}
       >
         <DayPicker
+          key={activeCampground}
           mode="multiple"
-          animate
           navLayout="around"
+          animate
           month={startDate}
-          disabled={{ before: startDate, after: endDate }}
           onDayClick={handleDateSelect}
-          selected={selectedDates}
+          selected={getActiveCampgroundDates()}
+          disabled={(date) =>
+            !activeCampground || date < startDate || date > endDate
+          }
         />
       </div>
     </>

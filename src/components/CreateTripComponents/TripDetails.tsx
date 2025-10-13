@@ -28,7 +28,7 @@ export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
 
   return (
     <div className="d-flex flex-column flex-grow-1">
-      <h2 className="text-black header-container">Trip Details</h2>
+      <h2 className="text-black header-container">Set Trip Details</h2>
       <input
         id="TripName"
         type="text"

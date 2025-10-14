@@ -72,9 +72,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+  try {
+    await apiFetch("/users/logout", { method: "POST" });
+
     setUser(null);
+  } catch (err: any) {
+    console.error("Logout failed:", err.message || err);
   }
+};
 
   return (
     <AuthContext.Provider value={{ user, login, logout, register, loading }}>

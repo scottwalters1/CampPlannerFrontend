@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 import { apiFetch } from "../api/api";
 
@@ -31,6 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // called upon login
   const login = async (username: string, password: string) => {
+    setLoading(true);
     try {
       const data = await apiFetch("/users/login", {
         method: "POST",
@@ -48,6 +49,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } catch (err) {
       console.error("Login failed:", err);
       return null;
+    }
+    finally{
+      setLoading(false);
     }
   };
 

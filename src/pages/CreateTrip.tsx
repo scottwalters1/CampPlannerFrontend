@@ -7,11 +7,12 @@ import type { Trip } from "../models/trip";
 import { apiFetch } from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import { TripCampground } from "../components/CreateTripComponents/CampGround";
+import { useNavigate } from "react-router-dom";
 
 export const CreateTrip = (): JSX.Element => {
   const { user } = useAuth();
   const [step, setStep] = useState(0);
-
+  const navigate = useNavigate();
   const tripData = useRef<Trip>({} as Trip);
 
   const updateTripData = (partial: Partial<Trip>) => {
@@ -55,6 +56,8 @@ export const CreateTrip = (): JSX.Element => {
         method: "POST",
         body: tripData.current,
       });
+
+      navigate("/trips");
       console.log("Trip created successfully:", response);
     } catch (err: any) {
       console.error("Failed to create trip:", err);

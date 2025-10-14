@@ -59,7 +59,6 @@ export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
       </div>
       <div className="text-black inner-container overflow-auto flex-grow-1 my-2">
         {facilities.map((facility) => {
-          const isSelected = selectedFacility?.RecAreaID === facility.RecAreaID;
           return (
             <button
               key={facility.RecAreaID}

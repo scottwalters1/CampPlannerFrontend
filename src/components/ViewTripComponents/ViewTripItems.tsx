@@ -2,8 +2,8 @@ import type { JSX } from "react";
 import type { Trip } from "../../models/trip";
 
 interface ViewTripProps {
-  trips: Trip[];
   handleClick: (tripId: string) => void;
+  trips:Trip[];
 }
 
 const ViewTripItems = ({ trips, handleClick }: ViewTripProps): JSX.Element => {

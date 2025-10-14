@@ -34,7 +34,9 @@ const ViewTripDetails = ({
       <div className="inner-container" style={{ alignItems: "center" }}>
         <DayPicker
           mode="single"
-          onSelect={(d) => onChange(d as Date)}
+          onSelect={(d) => {
+            if (d) onChange(d); //dont let users deselect date. causes an error cause ui doesnt know what to render.
+          }}
           selected={selectedDate}
           animate
           navLayout="around"

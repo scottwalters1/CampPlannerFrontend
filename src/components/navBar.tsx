@@ -33,7 +33,7 @@ function NavBar() {
           {user ? (
             <div>
               {/* IMPLEMENT LOGOUT FUNCTIONALITY AND CHANGE TO LINK */}
-              <button>Logout - not implemented</button>
+              <a>Logout</a>
             </div>
           ) : (
             <Link to="/login">Login</Link>

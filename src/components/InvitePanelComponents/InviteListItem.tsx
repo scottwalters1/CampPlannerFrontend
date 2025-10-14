@@ -18,6 +18,7 @@ export const InviteListItem: React.FC<InviteListItemProps> = ({ invite }) => {
   // clear invite when accepted or denied
   useEffect(() => {
   async function fetchUser() {
+    console.log(invite);
     try {
       const userId = invite.ownerId; 
       const encodedId = encodeURIComponent(userId); 
@@ -32,6 +33,7 @@ export const InviteListItem: React.FC<InviteListItemProps> = ({ invite }) => {
   }, [invite.ownerId]);
 
   async function handleResponse(status: "Accepted" | "Denied") {
+    
     try {
       await apiFetch(`/trips/invites/${invite.tripId}`, {
         method: "PATCH",

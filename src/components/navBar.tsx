@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 function NavBar() {
   const [showInvites, setShowInvites] = useState(false);
   const bellRef = useRef<HTMLButtonElement | null>(null);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const toggleInvites = () => setShowInvites((prev) => !prev);
 
@@ -31,10 +31,9 @@ function NavBar() {
           )}
 
           {user ? (
-            <div>
-              {/* IMPLEMENT LOGOUT FUNCTIONALITY AND CHANGE TO LINK */}
-              <a>Logout</a>
-            </div>
+            <Link to="/login" onClick={logout}>
+              Logout
+            </Link>
           ) : (
             <Link to="/login">Login</Link>
           )}
@@ -44,6 +43,5 @@ function NavBar() {
     </>
   );
 }
-//TODO: conditional rendering for FaBell based on user logged in.
 
 export default NavBar;

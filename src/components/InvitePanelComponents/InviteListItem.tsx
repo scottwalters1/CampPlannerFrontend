@@ -52,7 +52,6 @@ export const InviteListItem: React.FC<InviteListItemProps> = ({ invite }) => {
 
       <p>Description: {invite.tripDescription}</p>
       <p>Invitation from: {user?.username}</p>
-      {/* Buttons */}
       <div>
         <button onClick={() => handleResponse("Accepted")}>
           Accept

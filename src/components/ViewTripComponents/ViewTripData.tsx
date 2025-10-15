@@ -12,7 +12,7 @@ interface ViewTripDetailsProps {
 
 const ViewTripData = ({trip}:ViewTripDetailsProps):JSX.Element => {
 
-  const [tarDate, setTarDate] = useState(trip.startDate);
+  const [tarDate, setTarDate] = useState<Date>(trip.startDate ?? new Date());
 
   return (
     <div className="basic-container view-trip-container" style={{flex:3}}>

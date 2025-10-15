@@ -1,4 +1,7 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE =
+  import.meta.env.MODE === "production"
+    ? "http://54.227.179.233:3000" // your EC2 backend
+    : "http://localhost:3000";     // your local backend
 
 interface FetchOptions extends RequestInit {
   body?: any;

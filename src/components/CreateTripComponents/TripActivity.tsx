@@ -84,45 +84,42 @@ export const TripActivity = ({
   }, [recAreaId]);
 
   const handleDateSelect = (date: Date) => {
-    if (!activeActivity) return; // cant pick new dates if no activity.
-    let updated;
-    setSelectedActivities((prev) => {
-      const activitywithDates = prev.find((p) => p.name === activeActivity)!;
+    if (!activeActivity) return;
 
-      if (!activitywithDates) {
-        //Add the activity to the list with the new date
+    setSelectedActivities((prev) => {
+      const existing = prev.find((p) => p.name === activeActivity);
+
+      let updated;
+      if (!existing) {
+        // Add a new activity with its first date
         updated = [...prev, { name: activeActivity, dates: [date] }];
-        return updated;
       } else {
         //activity already exists update calendar
-
-        const dateExists = activitywithDates.dates.some(
+        const dateExists = existing.dates.some(
           (d) => d.toDateString() === date.toDateString()
         );
 
         const updatedDates = dateExists
-          ? activitywithDates?.dates.filter(
+          ? existing.dates.filter(
               (d) => d.toDateString() !== date.toDateString()
             )
-          : [...activitywithDates.dates, date];
+          : [...existing.dates, date];
 
-        const updated = prev.map((p) => {
-          if (p.name === activeActivity) {
-            return { name: activeActivity, dates: updatedDates };
-          } else {
-            return p;
-          }
-        });
-
-        onChange({
-          tripActivities: updated.map((a) => ({
-            activityName: a.name,
-            dates: a.dates,
-          })),
-        });
-
-        return updated;
+        updated = prev.map((p) =>
+          p.name === activeActivity
+            ? { name: activeActivity, dates: updatedDates }
+            : p
+        );
       }
+
+      onChange({
+        tripActivities: updated.map((a) => ({
+          activityName: a.name,
+          dates: a.dates,
+        })),
+      });
+
+      return updated;
     });
   };
 

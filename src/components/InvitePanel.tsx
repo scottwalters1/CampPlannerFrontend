@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { apiFetch } from "../api/api";
 import { useAuth } from "../context/AuthContext";
-
-interface Invite {
-  tripId: string;
-  tripName: string;
-  ownerName: string;
-}
+import type { Invite } from "../models/invite";
+import { InviteListItem } from "./InvitePanelComponents/InviteListItem";
 
 interface InvitePanelProps {
   anchorRef: React.RefObject<HTMLElement | null>;
@@ -24,6 +20,7 @@ export const InvitePanel: React.FC<InvitePanelProps> = ({anchorRef}) => {
           const data = await apiFetch("/trips/invites", {
             method: "GET",
           });
+          // tripName, description - tracking down, trip owner name
           setInvites(data);
         }
       } catch (error) {
@@ -61,11 +58,7 @@ export const InvitePanel: React.FC<InvitePanelProps> = ({anchorRef}) => {
             <ul>
               {invites.map((invite) => (
                 <li key={invite.tripId}>
-                  <p>{invite.tripName}</p>
-                  <button>
-                    Accept
-                  </button>
-                  <button>Deny</button>
+                  <InviteListItem invite={invite}/>
                 </li>
               ))}
             </ul>

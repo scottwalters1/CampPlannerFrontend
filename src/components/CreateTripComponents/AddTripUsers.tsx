@@ -19,7 +19,7 @@ export const AddTripUsers = ({ onChange }: AddTripUsersProps): JSX.Element => {
     try {
       setError(null);
 
-      const newUser = await apiFetch("/users/" + trimmed, { method: "GET" });
+      const newUser = await apiFetch("/users/username/" + trimmed, { method: "GET" });
 
       if (!newUser) {
         setError("User not found");

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
 import { DayPicker } from "react-day-picker";
+import type { Weather } from "../../models/weather";
+import WeatherComponent from "../Items/WeatherItem";
 
 interface TripActivityProps {
   recAreaId?: number;
@@ -24,6 +26,8 @@ export const TripActivity = ({
     null
   );
 
+  const [weather, setWeather] = useState<Weather[]>([]);
+
   useEffect(() => {
     if (!recAreaId) return;
 
@@ -42,11 +46,48 @@ export const TripActivity = ({
     fetchActivities();
   }, [recAreaId]);
 
+  useEffect(() => {
+    if (!recAreaId) return;
+    const fetchWeatherData = async () => {
+      try {
+        const data: {
+          latitude: number;
+          longitude: number;
+        } = await apiFetch(`/ridb/recareas/${recAreaId}/coords`);
+
+        console.log(data);
+
+        const startDateStr = startDate.toISOString().split("T")[0];
+        const endDateStr = endDate.toISOString().split("T")[0];
+
+        const { latitude, longitude } = data;
+        const weatherData: Weather[] = await apiFetch(
+          `/weather?latitude=${latitude}&longitude=${longitude}&start_date=${startDateStr}&end_date=${endDateStr}&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max,precipitation_sum,weathercode`
+        );
+        console.log(weatherData);
+
+        setWeather(
+          weatherData.map((d) => ({
+            date: d.date,
+            temperature_max: d.temperature_max,
+            temperature_min: d.temperature_min,
+            windspeed: d.windspeed ?? 0,
+            precipitation: d.precipitation ?? 0,
+            weathercode: d.weathercode ?? 0,
+          }))
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchWeatherData();
+  }, [recAreaId]);
+
   const handleDateSelect = (date: Date) => {
     if (!activeActivity) return; // cant pick new dates if no activity.
     let updated;
     setSelectedActivities((prev) => {
-        const activitywithDates = prev.find((p) => p.name === activeActivity)!;
+      const activitywithDates = prev.find((p) => p.name === activeActivity)!;
 
       if (!activitywithDates) {
         //Add the activity to the list with the new date
@@ -118,7 +159,7 @@ export const TripActivity = ({
       </div>
       <div
         className="inner-container p-1 mb-2 text-black"
-        style={{ alignItems: "center" }}
+        style={{ flexDirection: "row", maxHeight: "300px" }}
       >
         <DayPicker
           key={activeActivity}
@@ -132,6 +173,21 @@ export const TripActivity = ({
           onDayClick={handleDateSelect}
           selected={getActiveActivityDates()}
         />
+        <div style={{ flex: 1, overflowY: "auto", marginLeft: "10px" }}>
+          {weather.map((w, index) => {
+            return (
+              <WeatherComponent
+                key={index}
+                weathercode={w.weathercode}
+                windspeed={w.windspeed}
+                temperature_max={w.temperature_max}
+                temperature_min={w.temperature_min}
+                date={w.date}
+                precipitation={w.precipitation}
+              />
+            );
+          })}
+        </div>
       </div>
     </>
   );

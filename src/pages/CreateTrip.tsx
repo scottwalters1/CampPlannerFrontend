@@ -25,14 +25,14 @@ export const CreateTrip = (): JSX.Element => {
     <TripCampground
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}
-      startDate={tripData.current.startDate}
-      endDate={tripData.current.endDate}
+      startDate={tripData.current.startDate!}
+      endDate={tripData.current.endDate!}
     />,
     <TripActivity
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}
-      startDate={tripData.current.startDate}
-      endDate={tripData.current.endDate}
+      startDate={tripData.current.startDate!}
+      endDate={tripData.current.endDate!}
     />,
     <AddTripUsers onChange={updateTripData} />,
   ];
@@ -66,7 +66,7 @@ export const CreateTrip = (): JSX.Element => {
 
   return (
     <div className="main camp-bg">
-      <div className="rounded-3 p-3 d-flex flex-column h-75 w-25 basic-container">
+      <div className="rounded-3 p-3 d-flex flex-column h-75 basic-container" style={{minWidth:"500px", maxWidth:"700px"}}>
         {steps[step]}
         {step === steps.length - 1 ? (
           <button className="btn btn-primary" onClick={postTrip}>

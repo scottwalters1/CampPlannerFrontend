@@ -3,6 +3,8 @@ import type { Trip } from "../../models/trip";
 import { apiFetch } from "../../api/api";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import type { Weather } from "../../models/weather";
+import WeatherComponent from "../Items/WeatherItem";
 
 interface TripCampGroundsProps {
   recAreaId?: number;
@@ -23,6 +25,9 @@ export const TripCampground = ({
   >([]);
   const [activeCampground, setActiveCampground] = useState<string | null>(null);
 
+  const [weather, setWeather] = useState<Weather[]>([]);
+
+  // Fetch campgrounds
   useEffect(() => {
     if (!recAreaId) return;
 
@@ -31,33 +36,60 @@ export const TripCampground = ({
         const data: { FacilityName: string }[] = await apiFetch(
           `/ridb/recareas/${recAreaId}/campgrounds`
         );
-
-        const campGroundNames = data.map((a: any) => a.FacilityName);
-        setCampgrounds(campGroundNames);
+        setCampgrounds(data.map((a) => a.FacilityName));
       } catch (err) {
-        console.error("Failed to fetch activities:", err);
+        console.error("Failed to fetch campgrounds:", err);
       }
     };
 
     fetchCampGrounds();
   }, [recAreaId]);
 
+  // Fetch weather
+  useEffect(() => {
+    if (!recAreaId) return;
+
+    const fetchWeatherData = async () => {
+      try {
+        const coords: { latitude: number; longitude: number } = await apiFetch(
+          `/ridb/recareas/${recAreaId}/coords`
+        );
+
+        const startDateStr = startDate.toISOString().split("T")[0];
+        const endDateStr = endDate.toISOString().split("T")[0];
+
+        const weatherData: Weather[] = await apiFetch(
+          `/weather?latitude=${coords.latitude}&longitude=${coords.longitude}&start_date=${startDateStr}&end_date=${endDateStr}&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max,precipitation_sum,weathercode`
+        );
+
+        setWeather(
+          weatherData.map((d) => ({
+            date: d.date,
+            temperature_max: d.temperature_max,
+            temperature_min: d.temperature_min,
+            windspeed: d.windspeed ?? 0,
+            precipitation: d.precipitation ?? 0,
+            weathercode: d.weathercode ?? 0,
+          }))
+        );
+      } catch (err) {
+        console.error("Failed to fetch weather:", err);
+      }
+    };
+
+    fetchWeatherData();
+  }, [recAreaId]);
+
   const handleDateSelect = (date: Date) => {
-    if (!activeCampground) return; // can't pick new dates if no campground
+    if (!activeCampground) return;
 
     setSelectedCampGrounds((prev) => {
-      const campgroundWithDates = prev.find(
-        (c) => c.name === activeCampground
-      )!;
+      const campgroundWithDates = prev.find((c) => c.name === activeCampground);
 
       if (!campgroundWithDates) {
-        // Add new campground with this date
         const updated = [...prev, { name: activeCampground, dates: [date] }];
         onChange({
-          campGrounds: updated.map((c) => ({
-            campgroundName: c.name,
-            dates: c.dates,
-          })),
+          campGrounds: updated.map((c) => ({ campgroundName: c.name, dates: c.dates })),
         });
         return updated;
       } else {
@@ -66,22 +98,15 @@ export const TripCampground = ({
         );
 
         const updatedDates = dateExists
-          ? campgroundWithDates.dates.filter(
-              (d) => d.toDateString() !== date.toDateString()
-            )
+          ? campgroundWithDates.dates.filter((d) => d.toDateString() !== date.toDateString())
           : [...campgroundWithDates.dates, date];
 
         const updated = prev.map((c) =>
-          c.name === activeCampground
-            ? { name: activeCampground, dates: updatedDates }
-            : c
+          c.name === activeCampground ? { name: activeCampground, dates: updatedDates } : c
         );
 
         onChange({
-          campGrounds: updated.map((c) => ({
-            campgroundName: c.name,
-            dates: c.dates,
-          })),
+          campGrounds: updated.map((c) => ({ campgroundName: c.name, dates: c.dates })),
         });
 
         return updated;
@@ -91,9 +116,7 @@ export const TripCampground = ({
 
   const getActiveCampgroundDates = (): Date[] => {
     if (!activeCampground) return [];
-    const campground = selectedCampGrounds.find(
-      (c) => c.name === activeCampground
-    );
+    const campground = selectedCampGrounds.find((c) => c.name === activeCampground);
     return campground ? campground.dates : [];
   };
 
@@ -110,9 +133,7 @@ export const TripCampground = ({
           <button
             key={index}
             onClick={() => setActiveCampground(campground)}
-            className={`custom-btn ${
-              activeCampground === campground ? "active" : ""
-            }`}
+            className={`custom-btn ${activeCampground === campground ? "active" : ""}`}
           >
             {campground}
             <br />
@@ -124,14 +145,14 @@ export const TripCampground = ({
           </button>
         ))}
       </div>
+
       <div
-        className="inner-container text-black p-1 mb-2"
-        style={{ alignItems: "center" }}
+        className="inner-container p-1 mb-2 text-black"
+        style={{ flexDirection: "row", display: "flex", maxHeight: "300px" }}
       >
         <DayPicker
           key={activeCampground}
           mode="multiple"
-          navLayout="around"
           animate
           month={startDate}
           onDayClick={handleDateSelect}
@@ -140,6 +161,19 @@ export const TripCampground = ({
             !activeCampground || date < startDate || date > endDate
           }
         />
+        <div style={{ flex: 1, overflowY: "auto", marginLeft: "10px" }}>
+          {weather.map((w, index) => (
+            <WeatherComponent
+              key={index}
+              weathercode={w.weathercode}
+              windspeed={w.windspeed}
+              temperature_max={w.temperature_max}
+              temperature_min={w.temperature_min}
+              date={w.date}
+              precipitation={w.precipitation}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

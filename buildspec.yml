@@ -2,9 +2,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: 18
     commands:
-      # - npm install -g vite@latest
+      - npm install -g vite@latest
       # - npm install -g create-react-app
   pre_build:
     commands:

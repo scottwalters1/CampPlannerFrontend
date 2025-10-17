@@ -1,6 +1,6 @@
 const API_BASE =
   import.meta.env.MODE === "production"
-    ? "http://54.227.179.233:3000" // your EC2 backend
+    ? "http://54.87.191.138:3000" // your EC2 backend
     : "http://localhost:3000";     // your local backend
 
 interface FetchOptions extends RequestInit {

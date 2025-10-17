@@ -16,7 +16,7 @@ const ViewTripItems = ({ trips, handleClick }: ViewTripProps): JSX.Element => {
       <div className="inner-container flex-column p-3 overflow-auto d-flex flex-grow-1">
         {trips.map((t, index) => (
           <button className="custom-btn" key={index} onClick={() => handleClick(t.tripId)}>
-            {t.tripName}
+            {t.tripName} by {t.ownerUsername}
           </button>
         ))}
       </div>

@@ -49,10 +49,9 @@ export const CreateTrip = (): JSX.Element => {
       console.error("Cannot post: no logged-in user.");
       return;
     }
-    
+
     tripData.current.ownerId = user.userID;
     tripData.current.ownerUsername = user.username;
-    console.log(tripData.current.ownerUsername);
 
     try {
       const response = await apiFetch("/trips", {

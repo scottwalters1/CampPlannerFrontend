@@ -14,6 +14,7 @@ const ViewInvitedUsers = ({ invitedUsers, ownerUsername }: ViewInvitedUsersProps
           <div key={index}>
             <h3>
               <strong>{ownerUsername}</strong>
+              {ownerUsername}
               {user.username}
               {/* : {user.inviteStatus} */}
               {/* Figure out invite status update - maybe create InviteContext */}

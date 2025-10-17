@@ -39,7 +39,7 @@ export const CreateTrip = (): JSX.Element => {
   ];
 
   const nextStep = () => {
-    console.log("Current trip data:", tripData.current);
+    console.log("Current trip data - ", tripData.current);
     setStep((prev) => prev + 1);
   };
 

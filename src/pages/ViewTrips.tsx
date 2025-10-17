@@ -37,6 +37,7 @@ export const ViewTrip = (): JSX.Element => {
           })),
           startDate: trip.startDate ? new Date(trip.startDate) : new Date(0),
           endDate: trip.endDate ? new Date(trip.endDate) : new Date(0),
+          ownerUsername: trip.ownerUsername,
         }));
 
         setTrips(mappedTrips);
@@ -83,4 +84,5 @@ const emptyTrip: Trip = {
   invitedUsers: [],
   startDate: new Date(0),
   endDate: new Date(0),
+  ownerUsername:"",
 };

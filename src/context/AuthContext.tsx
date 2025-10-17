@@ -32,34 +32,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [loading, setLoading] = useState(true);
 
-  // called upon login
-  // const login = async (username: string, password: string) => {
-  //   setLoading(true);
-  //   try {
-  //     const data = await apiFetch("/users/login", {
-  //       method: "POST",
-  //       body: { username, password },
-  //     });
-
-  //     if (!data) return null;
-
-  //     setToken(data.token);
-
-  //     // login sets the cookie, now fetch user info
-  //     const me = await apiFetch("/users/me", { method: "GET" });
-  //     const userObj = { username: me.username, userID: me.userID };
-  //     setUser(userObj);
-
-  //     return userObj;
-  //   } catch (err) {
-  //     console.error("Login failed:", err);
-  //     return null;
-  //   }
-  //   finally{
-  //     setLoading(false);
-  //   }
-  // };
-
   const login = async (username: string, password: string) => {
     setLoading(true);
     try {
@@ -70,7 +42,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (!data) return null;
 
-      // login sets the cookie, now fetch user info
+      setToken(data.token);
+
       const userObj = { username: data.user.username, userID: data.user.PK };
       setUser(userObj);
 

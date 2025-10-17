@@ -39,7 +39,9 @@ export const ViewTrip = (): JSX.Element => {
           endDate: trip.endDate ? new Date(trip.endDate) : new Date(0),
           ownerUsername: trip.ownerUsername,
         }));
-
+        for (const trip of mappedTrips) {
+          console.log(trip.ownerUsername);
+        }
         setTrips(mappedTrips);
       } catch (err) {
         console.error("Failed to fetch trips:", err);
@@ -66,7 +68,7 @@ export const ViewTrip = (): JSX.Element => {
           trips={trips}
           handleClick={(e) => setSelectedTripId(e)}
         />
-       <ViewTripData trip={selectedTrip ?? emptyTrip} />
+        <ViewTripData trip={selectedTrip ?? emptyTrip} />
       </div>
     </div>
   );
@@ -84,5 +86,5 @@ const emptyTrip: Trip = {
   invitedUsers: [],
   startDate: new Date(0),
   endDate: new Date(0),
-  ownerUsername:"",
+  ownerUsername: "",
 };

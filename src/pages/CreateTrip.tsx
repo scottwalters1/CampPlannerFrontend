@@ -49,8 +49,7 @@ export const CreateTrip = (): JSX.Element => {
       console.error("Cannot post: no logged-in user.");
       return;
     }
-    console.log(user.username);
-    console.log(tripData.current.ownerUsername);
+    
     tripData.current.ownerId = user.userID;
     tripData.current.ownerUsername = user.username;
     console.log(tripData.current.ownerUsername);

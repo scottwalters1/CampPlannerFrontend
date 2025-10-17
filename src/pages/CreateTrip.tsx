@@ -14,14 +14,15 @@ export const CreateTrip = (): JSX.Element => {
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
   const tripData = useRef<Trip>({} as Trip);
+  const [isDiasbled, setIsDisabled] = useState<boolean>(true);
 
   const updateTripData = (partial: Partial<Trip>) => {
     tripData.current = { ...tripData.current, ...partial };
   };
 
   const steps = [
-    <TripDetails onChange={updateTripData} />,
-    <TripFacility onChange={updateTripData} />,
+    <TripDetails onChange={updateTripData} isDisabled={setIsDisabled}/>,
+    <TripFacility onChange={updateTripData} isDisabled={setIsDisabled} />,
     <TripCampground
       recAreaId={tripData.current.recAreaId}
       onChange={updateTripData}
@@ -73,7 +74,7 @@ export const CreateTrip = (): JSX.Element => {
             Finalize
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={nextStep}>
+          <button className="btn btn-primary" onClick={nextStep} disabled={isDiasbled}>
             Next
           </button>
         )}

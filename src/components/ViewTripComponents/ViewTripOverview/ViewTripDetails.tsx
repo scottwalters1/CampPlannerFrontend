@@ -7,7 +7,7 @@ import type { Weather } from "../../../models/weather";
 interface TripDetailsProps {
   tripName: string;
   recName: string;
-  recAreaId:number;
+  recAreaId: number;
   tripDescription: string;
   startDate: Date;
   endDate: Date;
@@ -25,46 +25,45 @@ const ViewTripDetails = ({
   selectedDate,
   recAreaId,
 }: TripDetailsProps) => {
-
   const [weather, setWeather] = useState<Weather[]>([]);
+  const [weatherErr, setWeatherErr] = useState<boolean>(false);
 
   useEffect(() => {
-      if (!recAreaId) return;
-      if(!selectedDate) return;
-        console.log('Fetching weather for', selectedDate.toISOString());
+    if (!recAreaId) return;
+    if (!selectedDate) return;
 
-      const fetchWeatherData = async () => {
-        try {
-          const data: {
-            latitude: number;
-            longitude: number;
-          } = await apiFetch(`/ridb/recareas/${recAreaId}/coords`);
-  
-          const selDateToStr = selectedDate.toISOString().split("T")[0];
-          const { latitude, longitude } = data;
-          console.log({ latitude, longitude, selDateToStr });
-          const weatherData: Weather[] = await apiFetch(
-            `/weather?latitude=${latitude}&longitude=${longitude}&start_date=${selDateToStr}&end_date=${selDateToStr}&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max,precipitation_sum,weathercode`
-          );
-          console.log(weatherData);
-  
-          setWeather(
-            weatherData.map((d) => ({
-              date: d.date,
-              temperature_max: d.temperature_max,
-              temperature_min: d.temperature_min,
-              windspeed: d.windspeed ?? 0,
-              precipitation: d.precipitation ?? 0,
-              weathercode: d.weathercode ?? 0,
-            }))
-          );
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchWeatherData();
-    }, [selectedDate]);
+    const fetchWeatherData = async () => {
+      try {
+        const data: {
+          latitude: number;
+          longitude: number;
+        } = await apiFetch(`/ridb/recareas/${recAreaId}/coords`);
 
+        const selDateToStr = selectedDate.toISOString().split("T")[0];
+        const { latitude, longitude } = data;
+        console.log({ latitude, longitude, selDateToStr });
+        const weatherData: Weather[] = await apiFetch(
+          `/weather?latitude=${latitude}&longitude=${longitude}&start_date=${selDateToStr}&end_date=${selDateToStr}&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max,precipitation_sum,weathercode`
+        );
+
+        setWeather(
+          weatherData.map((d) => ({
+            date: d.date,
+            temperature_max: d.temperature_max,
+            temperature_min: d.temperature_min,
+            windspeed: d.windspeed ?? 0,
+            precipitation: d.precipitation ?? 0,
+            weathercode: d.weathercode ?? 0,
+          }))
+        );
+        setWeatherErr(false);
+      } catch (err) {
+        console.log(err);
+        setWeatherErr(true);
+      }
+    };
+    fetchWeatherData();
+  }, [selectedDate]);
 
   return (
     <div className="d-flex flex-column text-center m-3 details">
@@ -78,7 +77,7 @@ const ViewTripDetails = ({
         </h6>
       </div>
       <h3 className="header-container">Camping Trip Dates</h3>
-      <div className="inner-container" style={{flexDirection:"row"}}>
+      <div className="inner-container" style={{ flexDirection: "row" }}>
         <DayPicker
           mode="single"
           onSelect={(d) => {
@@ -90,9 +89,11 @@ const ViewTripDetails = ({
           month={startDate}
           disabled={{ before: startDate, after: endDate }}
         />
-          <div style={{ flex: 1, overflowY: "auto", marginLeft: "10px" }}>
-          {weather.map((w, index) => {
-            return (
+        <div style={{ flex: 1, overflowY: "auto", marginLeft: "10px" }}>
+          {weatherErr ? (
+            <h3>No valid forecasts</h3>
+          ) : weather.length > 0 ? (
+            weather.map((w, index) => (
               <WeatherComponent
                 key={index}
                 weathercode={w.weathercode}
@@ -102,8 +103,10 @@ const ViewTripDetails = ({
                 date={w.date}
                 precipitation={w.precipitation}
               />
-            );
-          })}
+            ))
+          ) : (
+            <h3>Loading...</h3>
+          )}
         </div>
       </div>
       <p className="inner-container mt-2">

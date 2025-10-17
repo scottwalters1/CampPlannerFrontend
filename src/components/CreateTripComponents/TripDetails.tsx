@@ -3,9 +3,10 @@ import type { Trip } from "../../models/trip";
 import { DayPicker, type DateRange } from "react-day-picker";
 interface TripDetailsProps {
   onChange: (data: Partial<Trip>) => void;
+  isDisabled: (v: boolean) => void;
 }
 
-export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
+export const TripDetails = ({ onChange, isDisabled}: TripDetailsProps): JSX.Element => {
   const [range, setRange] = useState<DateRange | undefined>(undefined);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,6 +25,7 @@ export const TripDetails = ({ onChange }: TripDetailsProps): JSX.Element => {
     if (!dateRange) return;
     setRange(dateRange);
     onChange({ startDate: dateRange.from, endDate: dateRange.to });
+    isDisabled(false);
   };
 
   return (

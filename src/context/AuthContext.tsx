@@ -18,7 +18,7 @@ interface AuthContextType {
   ) => Promise<{ username: string; userID: string } | null>;
   loading: boolean;
 
-  logout:() => void;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         body: { username, password },
       });
 
-      if (!data) return null;
+      if (!data) null;
 
       // login sets the cookie, now fetch user info
       const me = await apiFetch("/users/me", { method: "GET" });
@@ -50,9 +50,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return userObj;
     } catch (err) {
       console.error("Login failed:", err);
-      return null;
-    }
-    finally{
+      throw err;
+    } finally {
       setLoading(false);
     }
   };
@@ -64,23 +63,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         body: { username, password },
       });
 
-      if (!data) return null;
+      if (!data) null;
       return data;
     } catch (err) {
       console.error("Registration failed:", err);
-      return null;
+      throw err;
     }
   };
 
   const logout = async () => {
-  try {
-    await apiFetch("/users/logout", { method: "POST" });
+    try {
+      await apiFetch("/users/logout", { method: "POST" });
 
-    setUser(null);
-  } catch (err: any) {
-    console.error("Logout failed:", err.message || err);
-  }
-};
+      setUser(null);
+    } catch (err: any) {
+      console.error("Logout failed:", err.message || err);
+    }
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, logout, register, loading }}>

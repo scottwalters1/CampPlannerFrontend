@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 export const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); //not actually used just here for decoration
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errText, setErrText] = useState("");
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -14,13 +15,18 @@ export const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password === confirmPassword) {
-      const message = await register(username, password);
-      console.log(message);
-      if (message) {
-        navigate("/login");
+      try {
+        const message = await register(username, password);
+        console.log(message);
+        if (message) {
+          navigate("/login");
+        }
+      } catch {
+        setErrText("Username is taken!");
       }
     } else {
       console.error("Passwords don't match!");
+      setErrText("Passwords don't match!");
     }
   };
 
@@ -28,6 +34,7 @@ export const RegisterForm: React.FC = () => {
     <div className="login-form-container basic-container">
       <form onSubmit={handleSubmit}>
         <h2>Register</h2>
+        <p style={{color:"red"}}>{errText}</p>
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}

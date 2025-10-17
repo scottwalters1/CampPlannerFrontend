@@ -1,13 +1,18 @@
-import { useState, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { apiFetch } from "../../api/api";
 import type { Trip } from "../../models/trip";
 
 interface TripFacilityProps {
   onChange: (data: Partial<Trip>) => void;
+  isDisabled: (v: boolean) => void;
 }
 
 // probably rename to recArea
-export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
+export const TripFacility = ({ onChange, isDisabled }: TripFacilityProps): JSX.Element => {
+  useEffect(() => {
+    isDisabled(true);
+  }, [])
+
   const [facilities, setFacilities] = useState<
     { RecAreaName: string; RecAreaID: string }[]
   >([]);
@@ -40,6 +45,8 @@ export const TripFacility = ({ onChange }: TripFacilityProps): JSX.Element => {
       recAreaName: facility.RecAreaName,
       recAreaId: parseInt(facility.RecAreaID),
     });
+
+    isDisabled(false);
   };
 
   return (

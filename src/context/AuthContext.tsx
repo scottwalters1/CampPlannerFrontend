@@ -19,7 +19,7 @@ interface AuthContextType {
   ) => Promise<{ username: string; userID: string } | null>;
   loading: boolean;
 
-  logout: () => void;
+  logout:  () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return userObj;
     } catch (err) {
       console.error("Login failed:", err);
-      return null;
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -63,11 +63,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         body: { username, password },
       });
 
-      if (!data) return null;
+      if (!data) null;
       return data;
     } catch (err) {
       console.error("Registration failed:", err);
-      return null;
+      throw err;
     }
   };
 

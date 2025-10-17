@@ -7,6 +7,7 @@ import { RegisterPage } from "./pages/Register.tsx";
 import { CreateTrip } from "./pages/CreateTrip.tsx";
 import { ViewTrip } from "./pages/ViewTrips.tsx";
 import "./css/common.css";
+import ProtectedRoute from "./ProtectedRoute.tsx";
 
 function App() {
   return (
@@ -17,8 +18,22 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/trip" element={<CreateTrip />} />
-          <Route path="/trips" element={<ViewTrip />} />
+          <Route
+            path="/trip"
+            element={
+              <ProtectedRoute>
+                <CreateTrip />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/trips"
+            element={
+              <ProtectedRoute>
+                <ViewTrip />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
     </>

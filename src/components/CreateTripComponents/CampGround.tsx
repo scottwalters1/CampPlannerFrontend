@@ -26,6 +26,7 @@ export const TripCampground = ({
   const [activeCampground, setActiveCampground] = useState<string | null>(null);
 
   const [weather, setWeather] = useState<Weather[]>([]);
+  const [weatherErr, setWeatherErr] = useState<boolean>(false);
 
   // Fetch campgrounds
   useEffect(() => {
@@ -72,8 +73,10 @@ export const TripCampground = ({
             weathercode: d.weathercode ?? 0,
           }))
         );
+        setWeatherErr(false);
       } catch (err) {
         console.error("Failed to fetch weather:", err);
+        setWeatherErr(true);
       }
     };
 
@@ -89,7 +92,10 @@ export const TripCampground = ({
       if (!campgroundWithDates) {
         const updated = [...prev, { name: activeCampground, dates: [date] }];
         onChange({
-          campGrounds: updated.map((c) => ({ campgroundName: c.name, dates: c.dates })),
+          campGrounds: updated.map((c) => ({
+            campgroundName: c.name,
+            dates: c.dates,
+          })),
         });
         return updated;
       } else {
@@ -98,15 +104,22 @@ export const TripCampground = ({
         );
 
         const updatedDates = dateExists
-          ? campgroundWithDates.dates.filter((d) => d.toDateString() !== date.toDateString())
+          ? campgroundWithDates.dates.filter(
+              (d) => d.toDateString() !== date.toDateString()
+            )
           : [...campgroundWithDates.dates, date];
 
         const updated = prev.map((c) =>
-          c.name === activeCampground ? { name: activeCampground, dates: updatedDates } : c
+          c.name === activeCampground
+            ? { name: activeCampground, dates: updatedDates }
+            : c
         );
 
         onChange({
-          campGrounds: updated.map((c) => ({ campgroundName: c.name, dates: c.dates })),
+          campGrounds: updated.map((c) => ({
+            campgroundName: c.name,
+            dates: c.dates,
+          })),
         });
 
         return updated;
@@ -116,7 +129,9 @@ export const TripCampground = ({
 
   const getActiveCampgroundDates = (): Date[] => {
     if (!activeCampground) return [];
-    const campground = selectedCampGrounds.find((c) => c.name === activeCampground);
+    const campground = selectedCampGrounds.find(
+      (c) => c.name === activeCampground
+    );
     return campground ? campground.dates : [];
   };
 
@@ -133,7 +148,9 @@ export const TripCampground = ({
           <button
             key={index}
             onClick={() => setActiveCampground(campground)}
-            className={`custom-btn ${activeCampground === campground ? "active" : ""}`}
+            className={`custom-btn ${
+              activeCampground === campground ? "active" : ""
+            }`}
           >
             {campground}
             <br />
@@ -162,17 +179,23 @@ export const TripCampground = ({
           }
         />
         <div style={{ flex: 1, overflowY: "auto", marginLeft: "10px" }}>
-          {weather.map((w, index) => (
-            <WeatherComponent
-              key={index}
-              weathercode={w.weathercode}
-              windspeed={w.windspeed}
-              temperature_max={w.temperature_max}
-              temperature_min={w.temperature_min}
-              date={w.date}
-              precipitation={w.precipitation}
-            />
-          ))}
+          {weatherErr ? (
+            <h3>No valid forecasts</h3>
+          ) : weather.length > 0 ? (
+            weather.map((w, index) => (
+              <WeatherComponent
+                key={index}
+                weathercode={w.weathercode}
+                windspeed={w.windspeed}
+                temperature_max={w.temperature_max}
+                temperature_min={w.temperature_min}
+                date={w.date}
+                precipitation={w.precipitation}
+              />
+            ))
+          ) : (
+            <h3>Loading...</h3>
+          )}
         </div>
       </div>
     </>

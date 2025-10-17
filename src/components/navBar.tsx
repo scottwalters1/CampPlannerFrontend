@@ -26,9 +26,13 @@ function NavBar() {
         <div className="navbar-right">
           {user && (
             <div className="relative">
-              <button ref={bellRef} onClick={toggleInvites}>
-                <FaBell className="m-2" size={18} color="white" />
-              </button>
+              <span
+                ref={bellRef}
+                onClick={toggleInvites}
+                className="m-2 cursor-pointer inline-flex items-center justify-center"
+              >
+                <FaBell size={18} color="white" />
+              </span>
             </div>
           )}
 
@@ -41,7 +45,9 @@ function NavBar() {
           )}
         </div>
       </nav>
-      {showInvites && <InvitePanel anchorRef={bellRef} onClose={closeInvites} />}
+      {showInvites && (
+        <InvitePanel anchorRef={bellRef} onClose={closeInvites} />
+      )}
     </>
   );
 }

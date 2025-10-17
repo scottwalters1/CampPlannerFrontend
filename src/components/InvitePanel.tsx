@@ -89,7 +89,7 @@ export const InvitePanel: React.FC<InvitePanelProps> = ({
     >
       {user ? (
         <>
-          <h4>Invites for {user.username}</h4>
+          <h4 className="header-container">Invites for {user.username}</h4>
           {invites.length > 0 ? (
             <ul>
               {invites.map((invite) => (

@@ -51,15 +51,13 @@ export const InviteListItem: React.FC<InviteListItemProps> = ({
   }
 
   return (
-    <>
+    <div className="sub-container">
       <h3>Trip Name: {invite.tripName}</h3>
-
-      <p>Description: {invite.tripDescription}</p>
       <p>Invitation from: {user?.username}</p>
       <div>
-        <button onClick={() => handleResponse("Accepted")}>Accept</button>
-        <button onClick={() => handleResponse("Denied")}>Deny</button>
+        <button className="btn btn-primary" onClick={() => handleResponse("Accepted")}>Accept</button>
+        <button className="btn btn-danger" onClick={() => handleResponse("Denied")}>Deny</button>
       </div>
-    </>
+    </div>
   );
 };

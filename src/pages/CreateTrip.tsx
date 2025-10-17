@@ -51,6 +51,7 @@ export const CreateTrip = (): JSX.Element => {
     }
 
     tripData.current.ownerId = user.userID;
+    tripData.current.ownerUsername = user.username;
 
     try {
       const response = await apiFetch("/trips", {

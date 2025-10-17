@@ -10,6 +10,7 @@ export interface Trip{
     recAreaName:string;
     recAreaId:number;
     ownerId:string;
+    ownerUsername:string;
     invitedUsers:InvitedUser[];
     startDate:Date;
     endDate:Date;

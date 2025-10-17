@@ -1,6 +1,7 @@
-import { useContext, type JSX } from "react";
+// import { useContext, type JSX } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import type { JSX } from "react";
 
 interface ProtectedRoutesProps{
     children: JSX.Element;

@@ -2,10 +2,9 @@ import type { InvitedUser } from "../../../models/invitedUser";
 
 interface ViewInvitedUsersProps {
   invitedUsers: InvitedUser[];
-  ownerUsername:string;
 }
 
-const ViewInvitedUsers = ({ invitedUsers, ownerUsername }: ViewInvitedUsersProps) => {
+const ViewInvitedUsers = ({ invitedUsers }: ViewInvitedUsersProps) => {
   return (
     <div className="d-flex flex-column text-center m-3 invitedUsers">
       <h3 className="header-container">Invited Users</h3>
@@ -13,8 +12,6 @@ const ViewInvitedUsers = ({ invitedUsers, ownerUsername }: ViewInvitedUsersProps
         {invitedUsers.map((user, index) => (
           <div key={index}>
             <h3>
-              <strong>{ownerUsername}</strong>
-              {ownerUsername}
               {user.username}
               {/* : {user.inviteStatus} */}
               {/* Figure out invite status update - maybe create InviteContext */}

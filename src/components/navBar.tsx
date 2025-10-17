@@ -12,6 +12,8 @@ function NavBar() {
 
   const toggleInvites = () => setShowInvites((prev) => !prev);
 
+  const closeInvites = () => setShowInvites(false);
+
   return (
     <>
       <nav className="navbar">
@@ -39,7 +41,7 @@ function NavBar() {
           )}
         </div>
       </nav>
-      {showInvites && <InvitePanel anchorRef={bellRef} />}
+      {showInvites && <InvitePanel anchorRef={bellRef} onClose={closeInvites} />}
     </>
   );
 }

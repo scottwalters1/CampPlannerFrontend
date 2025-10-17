@@ -35,8 +35,8 @@ export const ViewTrip = (): JSX.Element => {
             username: u.username,
             inviteStatus: u.inviteStatus,
           })),
-          startDate: trip.startDate ? new Date(trip.startDate) : undefined,
-          endDate: trip.endDate ? new Date(trip.endDate) : undefined,
+          startDate: trip.startDate ? new Date(trip.startDate) : new Date(0),
+          endDate: trip.endDate ? new Date(trip.endDate) : new Date(0),
         }));
 
         setTrips(mappedTrips);

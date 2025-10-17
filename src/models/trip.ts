@@ -11,7 +11,7 @@ export interface Trip{
     recAreaId:number;
     ownerId:string;
     invitedUsers:InvitedUser[];
-    startDate:Date | undefined;
-    endDate:Date | undefined;
+    startDate:Date;
+    endDate:Date;
     tripId:string;
 }

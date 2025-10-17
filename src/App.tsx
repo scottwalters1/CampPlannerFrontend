@@ -1,7 +1,7 @@
 import { LoginPage } from "./pages/Login.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/navBar.tsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import { RegisterPage } from "./pages/Register.tsx";
 import { CreateTrip } from "./pages/CreateTrip.tsx";

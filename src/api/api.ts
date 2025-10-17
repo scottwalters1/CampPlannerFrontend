@@ -1,4 +1,9 @@
-const API_BASE = "http://localhost:3000";
+import { getToken } from "../util/authToken";
+
+const API_BASE =
+  import.meta.env.MODE === "production"
+    ? "http://54.87.191.138:3000" // your EC2 backend
+    : "http://localhost:3000";     // your local backend
 
 interface FetchOptions extends RequestInit {
   body?: any;
@@ -7,16 +12,19 @@ interface FetchOptions extends RequestInit {
 export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
   const { body, headers = {}, ...rest } = options;
 
+  const token = getToken();
+
   const res = await fetch(`${API_BASE}${endpoint}`, {
     ...rest,
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
     body: body ? JSON.stringify(body) : undefined,
-    credentials: "include", // automatically include cookies
+    // remove credentials for cookie auth
+    // credentials: "include",
   });
-
   const data = await res.json().catch(() => null);
 
   

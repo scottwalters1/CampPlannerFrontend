@@ -19,7 +19,7 @@ const ViewTripData = ({trip}:ViewTripDetailsProps):JSX.Element => {
       <ViewTripDetails tripName={trip.tripName} recName={trip.recAreaName} tripDescription={trip.tripDescription} startDate={trip.startDate} endDate={trip.endDate} onChange={setTarDate} selectedDate={tarDate} recAreaId={trip.recAreaId} />
       <ViewActivities activities={trip.tripActivities} targetDate={tarDate}/>
       <ViewCampGrounds campGrounds={trip.campGrounds} targetDate={tarDate}/>
-      <ViewInvitedUsers invitedUsers={trip.invitedUsers}/>
+      <ViewInvitedUsers invitedUsers={trip.invitedUsers} ownerUsername={trip.ownerUsername}/>
     </div>
   );
 };

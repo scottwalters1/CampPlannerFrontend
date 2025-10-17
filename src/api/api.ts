@@ -2,8 +2,8 @@ import { getToken } from "../util/authToken";
 
 const API_BASE =
   import.meta.env.MODE === "production"
-    ? "http://54.87.191.138:3000" // your EC2 backend
-    : "http://localhost:3000";     // your local backend
+    ? "http://54.87.191.138:3000" // EC2 
+    : "http://localhost:3000";     // local
 
 interface FetchOptions extends RequestInit {
   body?: any;

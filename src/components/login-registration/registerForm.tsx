@@ -22,7 +22,12 @@ export const RegisterForm: React.FC = () => {
           navigate("/login");
         }
       } catch {
-        setErrText("Username is taken!");
+        if (username === "") {
+          setErrText("Username required!");
+        } else {
+          setErrText("Username is taken!");
+        }
+        
       }
     } else {
       console.error("Passwords don't match!");

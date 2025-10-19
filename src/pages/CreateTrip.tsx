@@ -21,7 +21,7 @@ export const CreateTrip = (): JSX.Element => {
   };
 
   const steps = [
-    <TripDetails onChange={updateTripData} isDisabled={setIsDisabled}/>,
+    <TripDetails onChange={updateTripData} isDisabled={setIsDisabled} />,
     <TripFacility onChange={updateTripData} isDisabled={setIsDisabled} />,
     <TripCampground
       recAreaId={tripData.current.recAreaId}
@@ -66,16 +66,53 @@ export const CreateTrip = (): JSX.Element => {
     }
   };
 
+  // return (
+  //   <div className="main camp-bg">
+  //     <div className="rounded-3 p-3 d-flex flex-column h-75 basic-container" style={{minWidth:"500px", maxWidth:"700px"}}>
+  //       {steps[step]}
+  //       {step === steps.length - 1 ? (
+  //         <button className="btn btn-primary" onClick={postTrip}>
+  //           Finalize
+  //         </button>
+  //       ) : (
+  //         <button className="btn btn-primary" onClick={nextStep} disabled={isDiasbled}>
+  //           Next
+  //         </button>
+  //       )}
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="main camp-bg">
-      <div className="rounded-3 p-3 d-flex flex-column h-75 basic-container" style={{minWidth:"500px", maxWidth:"700px"}}>
+    <div
+      className="main camp-bg"
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="rounded-3 p-3 d-flex flex-column basic-container"
+        style={{
+          minWidth: "500px",
+          maxWidth: "700px",
+          maxHeight: "80vh", // limit height
+          overflowY: "auto", // make scrollable if content exceeds
+        }}
+      >
         {steps[step]}
         {step === steps.length - 1 ? (
-          <button className="btn btn-primary" onClick={postTrip}>
+          <button className="btn btn-primary mt-3" onClick={postTrip}>
             Finalize
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={nextStep} disabled={isDiasbled}>
+          <button
+            className="btn btn-primary mt-3"
+            onClick={nextStep}
+            disabled={isDiasbled}
+          >
             Next
           </button>
         )}

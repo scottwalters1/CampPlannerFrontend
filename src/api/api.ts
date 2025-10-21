@@ -1,9 +1,11 @@
 import { getToken } from "../util/authToken";
 
-const API_BASE =
-  import.meta.env.MODE === "production"
-    ? "http://54.87.191.138:3000" // EC2 
-    : "http://localhost:3000";     // local
+// src/api/api.ts
+export const getApiBase = () => {
+  return import.meta.env.MODE === "production"
+    ? "http://54.87.191.138:3000"
+    : "http://localhost:3000";
+};
 
 interface FetchOptions extends RequestInit {
   body?: any;
@@ -14,7 +16,7 @@ export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
 
   const token = getToken();
 
-  const res = await fetch(`${API_BASE}${endpoint}`, {
+  const res = await fetch(`${getApiBase()}${endpoint}`, {
     ...rest,
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +29,7 @@ export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
   });
   const data = await res.json().catch(() => null);
 
-  
+
 
   if (!res.ok) {
     throw new Error(data?.message || "API request failed");

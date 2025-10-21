@@ -2,6 +2,7 @@ import type { JSX } from "react";
 import '../css/home.css';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import React from 'react';
 
 const Home = (): JSX.Element => {
   const { user } = useAuth(); 

@@ -19,7 +19,6 @@ test("TripActivity fetches activities and selects a date", async () => {
     { date: "2025-10-20", temperature_max: 60, temperature_min: 45, windspeed: 5, precipitation: 0, weathercode: 1 },
   ];
 
-  // First call returns activities, second returns coords, third returns weather
   apiFetch.mockResolvedValueOnce(mockActivities)
           .mockResolvedValueOnce(mockCoords)
           .mockResolvedValueOnce(mockWeather);
@@ -40,14 +39,11 @@ test("TripActivity fetches activities and selects a date", async () => {
     expect(screen.getByText("Hiking")).toBeInTheDocument();
   });
 
-  // Select activity
   fireEvent.click(screen.getByText("Hiking"));
 
-  // Pick a date (simulate clicking startDate)
-  const dayButton = screen.getByText("20"); // assuming daypicker renders button with day number
+  const dayButton = screen.getByText("20");
   fireEvent.click(dayButton);
 
-  // Check that onChange was called with selected activity and date
   await waitFor(() => {
     expect(onChangeMock).toHaveBeenCalledWith({
       tripActivities: [

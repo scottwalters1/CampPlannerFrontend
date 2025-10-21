@@ -38,29 +38,4 @@ test('CreateTrip workflow renders steps and posts trip', async () => {
   fireEvent.change(nameInput, { target: { value: "Secret Getaway" } });
 
   expect(nameInput.value).toBe("Secret Getaway");
-
-  
-
-
-  // Step 0: TripDetails
-  // const nextBtn = screen.getByRole('button', { name: /next/i });
-  // expect(nextBtn).toBeDisabled(); // Initially disabled
-  // // simulate enabling button
-  // fireEvent.click(nextBtn); // just testing button click, state management inside components
-
-  // // Manually move through steps
-  // for (let i = 0; i < 4; i++) {
-  //   const btn = screen.getByRole('button', { name: /next/i });
-  //   fireEvent.click(btn);
-  // }
-
-  // // Step 4: AddTripUsers, should show "Finalize" button
-  // const finalizeBtn = screen.getByRole('button', { name: /finalize/i });
-  // expect(finalizeBtn).toBeInTheDocument();
-
-  // // Click Finalize
-  // fireEvent.click(finalizeBtn);
-
-  // // Wait for postTrip async
-  // await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/trips'));
 });

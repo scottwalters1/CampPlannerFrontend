@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../css/login.css";
 import { useAuth } from "../../context/AuthContext.tsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -63,7 +63,7 @@ export const RegisterForm: React.FC = () => {
         <button className="btn btn-primary">Register</button>
       </form>
       <div className="text-center mt-3">
-        Already have an account? <a href="/login">Login here</a>
+        Already have an account? <Link to="/login">Login here</Link>
       </div>
     </div>
   );
